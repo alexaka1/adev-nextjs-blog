@@ -2,6 +2,7 @@
   "name": "adev-nextjs-blog",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "check-site-meta": "NODE_TLS_REJECT_UNAUTHORIZED=0 pnpx check-site-meta --no-analytics http://localhost:3000",
     "doctor:lockfile": "pnpm i --fix-lockfile",
@@ -12,8 +13,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "fmt": "prettier --check . --experimental-ternaries",
-    "fmt:fix": "prettier --write . --experimental-ternaries",
+    "fmt": "prettier --check .",
+    "fmt:fix": "prettier --write .",
     "renovate:debug": "LOG_LEVEL=debug pnpx renovate --platform=local"
   },
   "engines": {
@@ -37,6 +38,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
+    "eslint-config-prettier": "10.1.2",
+    "prettier": "3.5.3",
+    "prettier-plugin-tailwindcss": "0.6.11",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
