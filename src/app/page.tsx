@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-3xl">
       <section className="py-12">
-        <h1 className="mb-4 text-4xl font-bold">Hello there. I'm Alex.</h1>
+        <h1 className="mb-4 text-4xl font-bold">Hello there. I&apos;m Alex.</h1>
         <p className="text-muted-foreground mb-6 text-xl">
           Fuller-stack developer with a focus on privacy and security.
         </p>

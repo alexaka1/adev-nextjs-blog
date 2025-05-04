@@ -24,7 +24,9 @@ export default function Header() {
         {/* Mobile menu button */}
         <button
           className="md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={() => {
+            setIsMenuOpen(!isMenuOpen);
+          }}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMenuOpen ?
@@ -56,7 +58,9 @@ export default function Header() {
                 <Link
                   href={link.href}
                   className="hover:text-primary block py-2 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
                 >
                   {link.label}
                 </Link>

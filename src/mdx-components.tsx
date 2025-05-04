@@ -1,5 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
-import Image, { ImageProps } from 'next/image';
+// import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -44,14 +44,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </code>
     ),
-    img: (props) => (
-      <Image
-        sizes="100vw"
-        style={{ width: '100%', height: 'auto' }}
-        {...(props as ImageProps)}
-        alt={props.alt || ''}
-      />
-    ),
+    // img: (props) => (
+    //   <Image
+    //     sizes="100vw"
+    //     style={{ width: '100%', height: 'auto' }}
+    //     {...(props as ImageProps)}
+    //     alt={props.alt ?? ''}
+    //   />
+    // ),
     ...components,
   };
 }
