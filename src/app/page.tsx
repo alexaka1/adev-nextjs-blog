@@ -1,70 +1,154 @@
-import Image from 'next/image';
+import Link from 'next/link';
+import { AtSign, Mail, ArrowRight } from 'lucide-react';
+// import { Button } from '@/components/ui/button';
+import GitHub from '@/app/components/icons/github';
 
 export default function Home() {
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-        <Image className="dark:invert" src="/next.svg" alt="Next.js logo" width={180} height={38} priority />
-        <ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm/6 sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{' '}
-            <code className="rounded bg-black/[.05] px-1 py-0.5 font-[family-name:var(--font-geist-mono)] font-semibold dark:bg-white/[.06]">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">Save and see your changes instantly.</li>
-        </ol>
+    <div className="mx-auto max-w-3xl">
+      <section className="py-12">
+        <h1 className="mb-4 text-4xl font-bold">Hello there. I'm Alex.</h1>
+        <p className="text-muted-foreground mb-6 text-xl">
+          Fuller-stack developer with a focus on privacy and security.
+        </p>
+        <div className="mb-8 flex flex-wrap gap-3">
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">C#</div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">TypeScript</div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">Privacy</div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">Security</div>
+        </div>
+      </section>
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
+      <section className="border-border border-t py-6">
+        <h2 className="mb-4 text-2xl font-bold">For job inquiries</h2>
+        <div className="flex flex-col gap-4 sm:flex-row">
           <a
-            className="flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://www.linkedin.com/in/alex-martossy/"
             target="_blank"
             rel="noopener noreferrer"
+            className="text-primary flex items-center gap-2 hover:underline"
           >
-            <Image className="dark:invert" src="/vercel.svg" alt="Vercel logomark" width={20} height={20} />
-            Deploy now
+            <AtSign size={18} />
+            <span>LinkedIn</span>
           </a>
           <a
-            className="flex h-10 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:w-auto sm:px-5 sm:text-base md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:jobs.github@mail.martossy.hu"
+            className="text-primary flex items-center gap-2 hover:underline"
           >
-            Read our docs
+            <Mail size={18} />
+            <span>jobs.github@mail.martossy.hu</span>
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="/file.svg" alt="File icon" width={16} height={16} />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="/window.svg" alt="Window icon" width={16} height={16} />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <section className="border-border border-t py-6">
+        <h2 className="mb-4 text-2xl font-bold">Currently focusing on</h2>
+        <p className="mb-4">My job at Martin Engineering AG.</p>
+      </section>
+
+      <section className="border-border border-t py-6">
+        <h2 className="mb-4 text-2xl font-bold">Projects worth mentioning</h2>
+        <ul className="space-y-4">
+          <li>
+            <a
+              href="https://github.com/alexaka1/distroless-dotnet-healthchecks"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary flex items-center gap-2 hover:underline"
+            >
+              <GitHub className={`size-4.5`} />
+              <span>Distroless .Net healthchecks</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/alexaka1/serilog-extensions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary flex items-center gap-2 hover:underline"
+            >
+              <GitHub className={`size-4.5`} />
+              <span>Serilog Utf8JsonFormatter</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/alexaka1/mhu-nextjs-sport"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary flex items-center gap-2 hover:underline"
+            >
+              <GitHub className={`size-4.5`} />
+              <span>Next.js app for an event I attended</span>
+            </a>
+          </li>
+          <li className="flex items-center gap-2">
+            <GitHub className={`size-4.5`} />
+            <span>
+              I contributed the <code className="bg-muted rounded px-1 py-0.5 text-sm">SimpleLogin</code> provider to{' '}
+              <code className="bg-muted rounded px-1 py-0.5 text-sm">Auth.js</code>.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section className="border-border border-t py-6">
+        <h2 className="mb-4 text-2xl font-bold">Looking ahead</h2>
+        <p className="mb-4">
+          I plan on making more contributions to FOSS projects, especially for tools I already use.
+        </p>
+      </section>
+
+      <section className="border-border border-t py-6">
+        <h2 className="mb-4 text-2xl font-bold">What I want to learn</h2>
+        <ul className="ml-2 list-inside list-disc space-y-2">
+          <li>Dev containers</li>
+          <li>Passkey auth in my apps</li>
+          <li>YARP</li>
+        </ul>
+      </section>
+
+      <section className="border-border border-t py-6">
+        <h2 className="mb-4 text-2xl font-bold">Recent blog posts</h2>
+        <div className="space-y-6">
+          <article className="group">
+            <Link href="/blog/getting-started-with-passkeys">
+              <h3 className="group-hover:text-primary text-xl font-medium transition-colors">
+                Getting Started with Passkeys
+              </h3>
+              <p className="text-muted-foreground mt-1">
+                An introduction to implementing passkey authentication in your web applications.
+              </p>
+              <div className="text-primary mt-2 flex items-center gap-1 text-sm">
+                <span>Read more</span>
+                <ArrowRight size={14} />
+              </div>
+            </Link>
+          </article>
+          <article className="group">
+            <Link href="/blog/distroless-containers-for-dotnet">
+              <h3 className="group-hover:text-primary text-xl font-medium transition-colors">
+                Distroless Containers for .NET
+              </h3>
+              <p className="text-muted-foreground mt-1">
+                How to build secure, minimal container images for your .NET applications.
+              </p>
+              <div className="text-primary mt-2 flex items-center gap-1 text-sm">
+                <span>Read more</span>
+                <ArrowRight size={14} />
+              </div>
+            </Link>
+          </article>
+        </div>
+        <div className="mt-6">
+          {/*<Button asChild variant="outline">*/}
+          {/*  <Link href="/blog">*/}
+          {/*    View all posts*/}
+          {/*    <ArrowRight className="ml-2 h-4 w-4" />*/}
+          {/*  </Link>*/}
+          {/*</Button>*/}
+        </div>
+      </section>
     </div>
   );
 }
