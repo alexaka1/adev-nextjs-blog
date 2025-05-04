@@ -13,7 +13,7 @@ insert_final_newline = true
 charset = utf-8
 trim_trailing_whitespace = true
 
-[*.{js,jsx,ts,tsx}]
+[*.{js,jsx,ts,tsx,mjs,cjs}]
 indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
