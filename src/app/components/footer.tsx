@@ -57,7 +57,7 @@ export default function Footer() {
                   className="hover:text-primary transition-colors"
                   aria-label={link.label}
                 >
-                  <Icon className={`size-2.5`} />
+                  <Icon className={`size-2.5 dark:fill-white`} />
                 </a>
               );
             })}

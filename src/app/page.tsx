@@ -64,7 +64,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-primary flex items-center gap-2 hover:underline"
             >
-              <GitHub className={`size-4.5`} />
+              <GitHub className={`size-4.5 dark:fill-white`} />
               <span>Distroless .Net healthchecks</span>
             </a>
           </li>
@@ -75,7 +75,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-primary flex items-center gap-2 hover:underline"
             >
-              <GitHub className={`size-4.5`} />
+              <GitHub className={`size-4.5 dark:fill-white`} />
               <span>Serilog Utf8JsonFormatter</span>
             </a>
           </li>
@@ -86,12 +86,12 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-primary flex items-center gap-2 hover:underline"
             >
-              <GitHub className={`size-4.5`} />
+              <GitHub className={`size-4.5 dark:fill-white`} />
               <span>Next.js app for an event I attended</span>
             </a>
           </li>
           <li className="flex items-center gap-2">
-            <GitHub className={`size-4.5`} />
+            <GitHub className={`size-4.5 dark:fill-white`} />
             <span>
               I contributed the{' '}
               <code className="bg-muted rounded px-1 py-0.5 text-sm">
