@@ -12,10 +12,18 @@ export default function Home() {
           Fuller-stack developer with a focus on privacy and security.
         </p>
         <div className="mb-8 flex flex-wrap gap-3">
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">C#</div>
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">TypeScript</div>
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">Privacy</div>
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">Security</div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+            C#
+          </div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+            TypeScript
+          </div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+            Privacy
+          </div>
+          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+            Security
+          </div>
         </div>
       </section>
 
@@ -85,8 +93,15 @@ export default function Home() {
           <li className="flex items-center gap-2">
             <GitHub className={`size-4.5`} />
             <span>
-              I contributed the <code className="bg-muted rounded px-1 py-0.5 text-sm">SimpleLogin</code> provider to{' '}
-              <code className="bg-muted rounded px-1 py-0.5 text-sm">Auth.js</code>.
+              I contributed the{' '}
+              <code className="bg-muted rounded px-1 py-0.5 text-sm">
+                SimpleLogin
+              </code>{' '}
+              provider to{' '}
+              <code className="bg-muted rounded px-1 py-0.5 text-sm">
+                Auth.js
+              </code>
+              .
             </span>
           </li>
         </ul>
@@ -95,7 +110,8 @@ export default function Home() {
       <section className="border-border border-t py-6">
         <h2 className="mb-4 text-2xl font-bold">Looking ahead</h2>
         <p className="mb-4">
-          I plan on making more contributions to FOSS projects, especially for tools I already use.
+          I plan on making more contributions to FOSS projects, especially for
+          tools I already use.
         </p>
       </section>
 
@@ -117,7 +133,8 @@ export default function Home() {
                 Getting Started with Passkeys
               </h3>
               <p className="text-muted-foreground mt-1">
-                An introduction to implementing passkey authentication in your web applications.
+                An introduction to implementing passkey authentication in your
+                web applications.
               </p>
               <div className="text-primary mt-2 flex items-center gap-1 text-sm">
                 <span>Read more</span>
@@ -131,7 +148,8 @@ export default function Home() {
                 Distroless Containers for .NET
               </h3>
               <p className="text-muted-foreground mt-1">
-                How to build secure, minimal container images for your .NET applications.
+                How to build secure, minimal container images for your .NET
+                applications.
               </p>
               <div className="text-primary mt-2 flex items-center gap-1 text-sm">
                 <span>Read more</span>

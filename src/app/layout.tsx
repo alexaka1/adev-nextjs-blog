@@ -27,10 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} flex min-h-svh flex-col antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-svh flex-col antialiased`}
+      >
         {/*<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>*/}
         <Header />
-        <main className="container mx-auto flex-grow px-4 py-8">{children}</main>
+        <main className="container mx-auto flex-grow px-4 py-8">
+          {children}
+        </main>
         <Footer />
         {/*</ThemeProvider>*/}
       </body>

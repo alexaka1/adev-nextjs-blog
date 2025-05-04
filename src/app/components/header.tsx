@@ -35,7 +35,11 @@ export default function Header() {
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="hover:text-primary transition-colors">
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:text-primary transition-colors"
+            >
               {link.label}
             </Link>
           ))}
