@@ -35,7 +35,7 @@ export default function Header() {
         </button>
 
         {/* Desktop navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -51,7 +51,10 @@ export default function Header() {
 
       {/* Mobile navigation */}
       {isMenuOpen && (
-        <nav className="border-border border-t px-4 py-4 md:hidden">
+        <nav
+          className="border-border border-t px-4 py-4 md:hidden"
+          aria-label="Primary"
+        >
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>

@@ -32,7 +32,10 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
+          <nav
+            className="flex flex-col items-center gap-4 md:flex-row md:gap-8"
+            aria-label="Primary"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
