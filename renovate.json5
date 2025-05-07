@@ -23,7 +23,7 @@
     {
       customType: "regex",
       description: "Update pnpm in devcontainer",
-      fileMatch: ["(^|/|\\.)devcontainer.json$"],
+      managerFilePatterns: ["/(^|/|\\.)devcontainer.json$/"],
       matchStrings: [
         '# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s+"(?:.*)": "(?<currentValue>.+?)"\\s',
       ],
