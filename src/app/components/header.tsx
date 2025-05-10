@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-// import { ThemeToggle } from './theme-toggle';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { ThemeToggle } from '@/app/components/theme-toggle';
+import { Button } from '@/components/ui/button';
+import NavLink from '@/app/components/NavLink';
 
 const navLinks = [
   { href: '/blog', label: 'Blog' },
@@ -15,61 +16,65 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="border-border border-b">
+    <header className="border-b border-border">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-bold">
-          Alex Martossy
-        </Link>
+        <NavLink href="/" className="text-xl font-bold">
+          alexaka1.dev
+        </NavLink>
 
         {/* Mobile menu button */}
-        <button
+        <Button
           className="md:hidden"
+          variant={'outline'}
+          size={'icon'}
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
           }}
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          title={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMenuOpen ?
             <X size={24} />
           : <Menu size={24} />}
-        </button>
+        </Button>
 
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {navLinks.map((link) => (
-            <Link
+            <NavLink
               key={link.href}
               href={link.href}
-              className="hover:text-primary transition-colors"
+              className="transition-colors hover:text-primary"
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
-          {/*<ThemeToggle />*/}
+          <ThemeToggle />
         </nav>
       </div>
 
       {/* Mobile navigation */}
       {isMenuOpen && (
         <nav
-          className="border-border border-t px-4 py-4 md:hidden"
+          className="border-t border-border px-4 py-4 md:hidden"
           aria-label="Primary"
         >
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link
+                <NavLink
                   href={link.href}
-                  className="hover:text-primary block py-2 transition-colors"
+                  className="block py-2 transition-colors hover:text-primary"
                   onClick={() => {
                     setIsMenuOpen(false);
                   }}
                 >
                   {link.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
-            <li className="py-2">{/*<ThemeToggle />*/}</li>
+            <li className="py-2">
+              <ThemeToggle />
+            </li>
           </ul>
         </nav>
       )}

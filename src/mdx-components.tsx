@@ -1,5 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
-// import Image, { type ImageProps } from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -24,7 +24,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     a: ({ href, children }) => (
       <Link
         href={href as string}
-        className="text-primary hover:text-primary/80 transition-colors"
+        className="text-primary transition-colors hover:text-primary/80"
       >
         {children}
       </Link>
@@ -35,23 +35,23 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     li: ({ children }) => <li className="mt-2">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="border-primary/50 my-4 border-l-4 pl-4 italic">
+      <blockquote className="my-4 border-l-4 border-primary/50 pl-4 italic">
         {children}
       </blockquote>
     ),
     code: ({ children }) => (
-      <code className="bg-muted rounded px-1 py-0.5 text-foreground">
+      <code className="rounded bg-muted px-1 py-0.5 text-foreground">
         {children}
       </code>
     ),
-    // img: (props) => (
-    //   <Image
-    //     sizes="100vw"
-    //     style={{ width: '100%', height: 'auto' }}
-    //     {...(props as ImageProps)}
-    //     alt={props.alt ?? ''}
-    //   />
-    // ),
+    img: (props: ImageProps) => (
+      <Image
+        sizes="100vw"
+        style={{ width: '100%', height: 'auto' }}
+        {...props}
+        alt={props.alt}
+      />
+    ),
     ...components,
   };
 }
