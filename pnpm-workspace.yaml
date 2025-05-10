@@ -4,3 +4,4 @@ publicHoistPattern:
   - '*eslint*'
   - '*@nextui-org/*'
   - '@t3-oss/*'
+  - '@sentry/core'
