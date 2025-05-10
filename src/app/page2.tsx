@@ -12,36 +12,36 @@ export default function Home() {
           Fuller-stack developer with a focus on privacy and security.
         </p>
         <div className="mb-8 flex flex-wrap gap-3">
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+          <div className="rounded-full bg-main/10 px-3 py-1 text-sm text-main">
             C#
           </div>
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+          <div className="rounded-full bg-main/10 px-3 py-1 text-sm text-main">
             TypeScript
           </div>
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+          <div className="rounded-full bg-main/10 px-3 py-1 text-sm text-main">
             Privacy
           </div>
-          <div className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm">
+          <div className="rounded-full bg-main/10 px-3 py-1 text-sm text-main">
             Security
           </div>
         </div>
       </section>
 
-      <section className="border-border border-t py-6">
+      <section className="border-t border-border py-6">
         <h2 className="mb-4 text-2xl font-bold">For job inquiries</h2>
         <div className="flex flex-col gap-4 sm:flex-row">
           <a
             href="https://www.linkedin.com/in/alex-martossy/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary flex items-center gap-2 hover:underline"
+            className="flex items-center gap-2 text-main hover:underline"
           >
             <AtSign size={18} />
             <span>LinkedIn</span>
           </a>
           <a
             href="mailto:jobs.github@mail.martossy.hu"
-            className="text-primary flex items-center gap-2 hover:underline"
+            className="flex items-center gap-2 text-main hover:underline"
           >
             <Mail size={18} />
             <span>jobs.github@mail.martossy.hu</span>
@@ -49,12 +49,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-border border-t py-6">
+      <section className="border-t border-border py-6">
         <h2 className="mb-4 text-2xl font-bold">Currently focusing on</h2>
         <p className="mb-4">My job at Martin Engineering AG.</p>
       </section>
 
-      <section className="border-border border-t py-6">
+      <section className="border-t border-border py-6">
         <h2 className="mb-4 text-2xl font-bold">Projects worth mentioning</h2>
         <ul className="space-y-4">
           <li>
@@ -62,7 +62,7 @@ export default function Home() {
               href="https://github.com/alexaka1/distroless-dotnet-healthchecks"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary flex items-center gap-2 hover:underline"
+              className="flex items-center gap-2 text-main hover:underline"
             >
               <GitHub className={`size-4.5 dark:fill-white`} />
               <span>Distroless .Net healthchecks</span>
@@ -73,7 +73,7 @@ export default function Home() {
               href="https://github.com/alexaka1/serilog-extensions"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary flex items-center gap-2 hover:underline"
+              className="flex items-center gap-2 text-main hover:underline"
             >
               <GitHub className={`size-4.5 dark:fill-white`} />
               <span>Serilog Utf8JsonFormatter</span>
@@ -84,7 +84,7 @@ export default function Home() {
               href="https://github.com/alexaka1/mhu-nextjs-sport"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary flex items-center gap-2 hover:underline"
+              className="flex items-center gap-2 text-main hover:underline"
             >
               <GitHub className={`size-4.5 dark:fill-white`} />
               <span>Next.js app for an event I attended</span>
@@ -107,7 +107,7 @@ export default function Home() {
         </ul>
       </section>
 
-      <section className="border-border border-t py-6">
+      <section className="border-t border-border py-6">
         <h2 className="mb-4 text-2xl font-bold">Looking ahead</h2>
         <p className="mb-4">
           I plan on making more contributions to FOSS projects, especially for
@@ -115,7 +115,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="border-border border-t py-6">
+      <section className="border-t border-border py-6">
         <h2 className="mb-4 text-2xl font-bold">What I want to learn</h2>
         <ul className="ml-2 list-inside list-disc space-y-2">
           <li>Dev containers</li>
@@ -124,19 +124,19 @@ export default function Home() {
         </ul>
       </section>
 
-      <section className="border-border border-t py-6">
+      <section className="border-t border-border py-6">
         <h2 className="mb-4 text-2xl font-bold">Recent blog posts</h2>
         <div className="space-y-6">
           <article className="group">
             <Link href="/blog/getting-started-with-passkeys">
-              <h3 className="group-hover:text-primary text-xl font-medium transition-colors">
+              <h3 className="text-xl font-medium transition-colors group-hover:text-main">
                 Getting Started with Passkeys
               </h3>
               <p className="text-muted-foreground mt-1">
                 An introduction to implementing passkey authentication in your
                 web applications.
               </p>
-              <div className="text-primary mt-2 flex items-center gap-1 text-sm">
+              <div className="mt-2 flex items-center gap-1 text-sm text-main">
                 <span>Read more</span>
                 <ArrowRight size={14} />
               </div>
@@ -144,14 +144,14 @@ export default function Home() {
           </article>
           <article className="group">
             <Link href="/blog/distroless-containers-for-dotnet">
-              <h3 className="group-hover:text-primary text-xl font-medium transition-colors">
+              <h3 className="text-xl font-medium transition-colors group-hover:text-main">
                 Distroless Containers for .NET
               </h3>
               <p className="text-muted-foreground mt-1">
                 How to build secure, minimal container images for your .NET
                 applications.
               </p>
-              <div className="text-primary mt-2 flex items-center gap-1 text-sm">
+              <div className="mt-2 flex items-center gap-1 text-sm text-main">
                 <span>Read more</span>
                 <ArrowRight size={14} />
               </div>

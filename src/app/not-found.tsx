@@ -22,19 +22,19 @@ export default function NotFound() {
       >
         <h1 className="relative mb-6 text-9xl font-extrabold tracking-tight">
           <span
-            className="animate-glitch-1 absolute top-0 left-0 w-full text-primary-foreground"
+            className="animate-glitch-1 absolute top-0 left-0 w-full text-main-foreground"
             aria-hidden={true}
           >
             404
           </span>
           <span
-            className="animate-glitch-2 absolute top-0 left-0 w-full text-primary"
+            className="animate-glitch-2 absolute top-0 left-0 w-full text-main"
             aria-hidden={true}
           >
             404
           </span>
           <span
-            className="animate-glitch-3 absolute top-0 left-0 w-full text-secondary"
+            className="animate-glitch-3 text-secondary absolute top-0 left-0 w-full"
             aria-hidden={true}
           >
             404
@@ -44,7 +44,7 @@ export default function NotFound() {
 
         <h2 className="mb-8 text-2xl font-semibold">Oops! Page not found</h2>
 
-        <p className="mx-auto mb-10 max-w-md text-muted-foreground">
+        <p className="text-muted-foreground mx-auto mb-10 max-w-md">
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
           Let&apos;s get you back on track.
         </p>

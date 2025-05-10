@@ -53,7 +53,7 @@ export default function Header() {
             <NavLink
               key={link.href}
               href={link.href}
-              className="hover:text-primary transition-colors"
+              className="transition-colors hover:text-main"
             >
               {link.label}
             </NavLink>
@@ -73,7 +73,7 @@ export default function Header() {
               <li key={link.href}>
                 <NavLink
                   href={link.href}
-                  className="hover:text-primary block py-2 transition-colors"
+                  className="block py-2 transition-colors hover:text-main"
                   onClick={() => {
                     setIsMenuOpen(false);
                   }}

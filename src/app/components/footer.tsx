@@ -23,7 +23,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="text-center md:text-left">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/60">
               © {new Date().getFullYear()} Alex Martossy. All rights reserved.
             </p>
             {/*<p className="mt-1 text-sm text-muted-foreground">*/}
@@ -58,7 +58,7 @@ export default function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="transition-colors hover:text-primary"
+                  className="transition-colors hover:fill-main"
                   aria-label={link.label}
                 >
                   <Icon className={`size-4 dark:fill-white`} />
