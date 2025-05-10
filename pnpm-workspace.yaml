@@ -1,7 +1,9 @@
+onlyBuiltDependencies:
+  - '@sentry/cli'
 packageManagerStrictVersion: true
-savePrefix: ''
 publicHoistPattern:
   - '*eslint*'
   - '*@nextui-org/*'
   - '@t3-oss/*'
   - '@sentry/core'
+savePrefix: ''
