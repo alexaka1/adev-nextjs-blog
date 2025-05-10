@@ -5,11 +5,12 @@ import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from '@/app/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import NavLink from '@/app/components/NavLink';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const navLinks = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About me' },
+  // { href: '/blog', label: 'Blog' },
+  // { href: '/projects', label: 'Projects' },
+  { href: '/', label: 'About me' },
 ];
 
 export default function Header() {
@@ -18,7 +19,17 @@ export default function Header() {
   return (
     <header className="border-b border-border">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <NavLink href="/" className="text-xl font-bold">
+        <NavLink
+          href="/"
+          className="inline-flex flex-row items-center justify-center gap-2 text-xl font-bold"
+        >
+          <Avatar>
+            <AvatarImage
+              src="https://github.com/alexaka1.png"
+              alt="@alexaka1"
+            />
+            <AvatarFallback>AM</AvatarFallback>
+          </Avatar>
           alexaka1.dev
         </NavLink>
 
