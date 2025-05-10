@@ -36,7 +36,6 @@ export default function Header() {
         {/* Mobile menu button */}
         <Button
           className="md:hidden"
-          variant={'outline'}
           size={'icon'}
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
@@ -54,7 +53,7 @@ export default function Header() {
             <NavLink
               key={link.href}
               href={link.href}
-              className="transition-colors hover:text-primary"
+              className="hover:text-primary transition-colors"
             >
               {link.label}
             </NavLink>
@@ -74,7 +73,7 @@ export default function Header() {
               <li key={link.href}>
                 <NavLink
                   href={link.href}
-                  className="block py-2 transition-colors hover:text-primary"
+                  className="hover:text-primary block py-2 transition-colors"
                   onClick={() => {
                     setIsMenuOpen(false);
                   }}
