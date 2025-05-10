@@ -15,7 +15,8 @@
     "lint:fix": "next lint --fix",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
-    "renovate:debug": "LOG_LEVEL=debug pnpx renovate --platform=local"
+    "renovate:debug": "LOG_LEVEL=debug pnpx renovate --platform=local",
+    "tw:upgrade": "pnpx @tailwindcss/upgrade@latest"
   },
   "engines": {
     "node": ">=22.12.0"
