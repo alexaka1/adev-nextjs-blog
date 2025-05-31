@@ -8,15 +8,15 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN corepack enable && corepack install && pnpm install --frozen-lockfile;
 
 # Rebuild the source code only when needed
 FROM base AS builder
 ARG VERCEL_PROJECT_PRODUCTION_URL
 WORKDIR /app
-COPY --link --from=deps /app/node_modules ./node_modules
-COPY --link . .
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
     --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
