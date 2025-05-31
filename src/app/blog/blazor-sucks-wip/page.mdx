@@ -1,6 +1,6 @@
 # Blazor sucks
 
-<span className={`mt-2 mb-4 text-xl font-light text-gray-600 italic dark:text-foreground/75`}>Or why having a brain aneurysm is not worth it just because Microsoft tells you</span>
+<span className={`mt-2 mb-4 text-xl font-light text-gray-600 italic dark:text-foreground/75`}>Or why having a brain aneurysm is not worth it just because Microsoft says so</span>
 <span className={`mb-8 flex items-center space-x-2 text-sm`}>
     By Alex Martossy | <time dateTime="2025-05-31">May 31, 2025</time>
 </span>
@@ -10,8 +10,7 @@ When I see someone advocating for Blazor, it invokes feelings in me that I could
 Blazor is being sold to the masses as a full-stack framework that lets you move fast.
 
 > [**Front-end web development made easy**](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor)  
-> Whether you're an individual or team, build secure, full-featured web apps faster with fewer resources.
->
+> Whether you're an individual or team, build secure, full-featured web apps faster with fewer resources.  
 > **One stack**  
 > Use the power of C# and the richness of the .NET platform to build full-stack web apps with greater productivity and performance.
 
@@ -34,7 +33,9 @@ I will get to the pros later. I am going to start with the cons whether you like
 
 ## [The 3 render modes](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-9.0#render-modes) all suck
 
-Blazor is actually handy for a fully static, server-rendered app, with no interactivity. That workflow has a much nicer DX than what we had in MVC or Razor Pages. The problems start coming as you move from `Hello world!` to more complex apps.
+Blazor is actually handy for a fully static, server-rendered app, with no interactivity. That workflow has a much nicer DX than what we had in MVC or Razor Pages. This is mainly because you can finally define reusable component fragments and not just full pages, or without [the awful partial views](https://learn.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-9.0).
+
+The problems start coming as you move from `Hello world!` to more complex apps.
 
 If using any two out of the three render modes, your app's complexity grows exponentially and the two modes leak into each other in the most disgusting sneaky ways possible. And I argue that you really can't pick just one of them and call it a day.
 
@@ -42,98 +43,117 @@ If using any two out of the three render modes, your app's complexity grows expo
 
 Static render mode has been around forever. It is what PHP does, it is `index.html`, elementary. A request hits the server, it renders HTML and returns it as a response. In ASP.NET Core terminology this means it is part of [the classic HTTP middleware pipeline](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0). [More on this later](#dependency-injection).
 
-The bane of all SPA apps is [the initial load time](https://youtu.be/Cifkb-ZVps4). To solve this, pre-rendering was (re)invented. In Blazor, pre-rendering and static rendering is really the same under the hood, it's just that interactive components by default pre-render on the server, and hydrate on the client.
+The bane of all SPA apps is [the initial load time](https://youtu.be/Cifkb-ZVps4). To solve this, pre-rendering was (re)invented. In Blazor, pre-rendering and static rendering are really the same under the hood, it's just that interactive components by default pre-render on the server, and hydrate on the client.
 
-When a user navigates to the app, the server renders some HTML, returns it, the user essentially sees the app, and then the page hydrates all the JS and dependencies in the background. This feels fast, even though the actual time to interactivity is roughly the same. For this very reason pre-rendering is unavoidable in Blazor, if we want the users to feel the app is fast.
+When a user navigates to the app, the server renders some HTML, returns it, the user essentially sees the app instantly, and then the page hydrates all the JS and dependencies in the background. This feels fast, even though the actual time to interactivity is roughly the same. For this very reason pre-rendering is unavoidable in Blazor if we want the users to feel the app is fast.
 
 ### Interactive server
 
 One of the ways Blazor achieves interactivity is by opening [a Signalr connection](https://dotnet.microsoft.com/en-us/apps/aspnet/signalr) to the server from the browser, and sending chunks of data back and forth, so the `blazor.js` can handle user interactions on the client. This has the nice benefit of all the business logic remaining on the server, under our control as is with traditional web apps.
 
-The problem with this is that now **just for having a single button that increments a counter** you have to have an open websocket to your server at all times. This collapses catastrophically when you introduce load balancing to your infrastructure. [Azure app service has a 50k limitation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#azure-app-service-limits) on open websockets per instance. The problem really starts rolling when you discover opening new tabs open distinct websocket connections (because of course they do, that's a browser security feature that tabs are isolated). And while you can prevent a desktop app from opening multiple times by simply observing the process table, you can't and shouldn't prevent the user from opening new tabs. But let's say you want to prevent the user to open new tabs. Congratulations, you now get to spend weeks engineering a layer on top of signalr that prevents new connections from being established to an authenticated user, to reduce load.
+The problem with this is that now **just for having a single button that increments a counter** you have to have an open websocket to your server at all times. This gets out of control fast when you introduce load balancing to your infrastructure. For example, [Azure app service has a 50k limitation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#azure-app-service-limits) on open websockets per instance. The problem really starts rolling when you discover opening new tabs also open separate websocket connections (which is a browser security feature). And while you can prevent a desktop app from opening multiple times by simply reading the process table, you can't and shouldn't prevent the user from opening new tabs. But let's say you want to prevent the user to open new tabs. Congratulations, you now get to spend weeks engineering a layer on top of signalr that prevents new connections from being established to an authenticated user, to reduce the load.
 
-TL;DR is that using this render mode literally requires special infrastructure (dynamic scaling, load-balancing, signalr backbone, etc.). In my mind there is no world where it is justifiable to have a websocket connection open at all times just to render a button with click handler.
+TL;DR is that using this render mode literally requires special infrastructure (dynamic scaling, load-balancing, signalr backbone, etc.). In my mind there is no world where it is justifiable to have a websocket connection open at all times just to render a button with a click handler.
 
-Not to mention [websockets is a dead technology](https://stackoverflow.com/a/77060459) in the browser. And also the most trivial-est of trivial tasks are near impossible to solve, and [are left as an exercise for the reader to implement](https://github.com/dotnet/aspnetcore/issues/52379#issuecomment-2737258124).
+Not to mention [websockets is an abandoned technology](https://stackoverflow.com/a/77060459) in the browser. And also the most trivial-est of trivial tasks are near impossible to solve, and [are left as an exercise for the reader to implement](https://github.com/dotnet/aspnetcore/issues/52379#issuecomment-2737258124).
 
 ### WebAssembly
 
-WebAssembly is probably the third biggest misnomer of the software development field, after `agile` and `javascript`. [WebAssembly absolutely sucks in the browser](https://youtu.be/fbd0MEWnPkE). WebAssembly CAN be very useful in the browser. For example, [running SQLite in WASM locally](https://www.sqlite.org/wasm/doc/trunk/index.md) and then calling it from javascript is a useful. Or counting the Fibonacci sequence externally with WASM and just awaiting a promise on the JS side is orders of magnitudes faster than doing the whole thing in JS. Although it's not WASM that is necessarily fast, it's the _language_ that was compiled to WASM. C++ or Rust WASM modules will be inherently fast. The .Net runtime has improved massively over the last couple of years, but .Net is still a garbage collected, just in time compiled language. Which means the JIT is happening in the browser! Which means you have to download the full .net runtime as WASM to run a hello world app in the browser. We're
-talking about megabytes of WASM **compressed**. Compared to Next.js, that's only hundreds of kilobytes **uncompressed**. And that runs _natively_ in the browser since it's just javascript. Not to mention in JS land, tree shaking is a solved problem. In WASM land, it's up to the runtime to do it. In .Net AOT is just starting to take off, trimming has great support now in the desktop runtime. But WASM? [Questionable support at best](https://learn.microsoft.com/en-us/aspnet/core/blazor/webassembly-build-tools-and-aot?view=aspnetcore-9.0), but this actually increases the bundle size, since the code won't JIT, so we have to transfer IL over the wire.
+[`WebAssembly` kinda sucks in the browser](https://youtu.be/fbd0MEWnPkE). `WebAssembly` CAN be very useful. For example, [running SQLite in WASM](https://www.sqlite.org/wasm/doc/trunk/index.md) and then calling it from `JavaScript` is handy for a local first app. Or counting the Fibonacci sequence externally with WASM and just awaiting a promise on the JS side is orders of magnitudes faster than doing the whole thing in JS. Although it's not WASM that is necessarily fast, it's the _language_ that was compiled to WASM. `C++` or `Rust` WASM modules will be inherently fast. While the .NET runtime has improved massively over the last couple of years, .NET is still a garbage-collected, just in time compiled language that needs a runtime before it can run on your machine. This is true for the WASM target too. Which means the `JIT` is happening in the browser! So you have to download the full .NET runtime compiled to WASM to run a hello world app in the browser. We're
+talking about megabytes of WASM **compressed**. Compared to `Next.js`, that's only hundreds of kilobytes **uncompressed**. And that runs _natively_ in the browser since it's just `JavaScript`. Not to mention in JS land, [tree shaking is a solved problem](https://vite.dev/guide/why#why-bundle-for-production). In WASM land, it's up to the runtime to do it. In .NET [Ahead-of-time compilation](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=linux-ubuntu%2Cnet8) is just starting to really take off (which really just means no JIT-ing), trimming has great support now in the desktop runtime. But WASM? [It is still a mystery to me what these options actually do](https://learn.microsoft.com/en-us/aspnet/core/blazor/webassembly-build-tools-and-aot?view=aspnetcore-9.0), but this guide also states this actually increases the bundle size, since the code won't JIT, so we have to transfer [IL](https://learn.microsoft.com/en-us/dotnet/standard/glossary#il) over the wire.
 
-Not to mention, cloud has egress costs. CDNs aren't free either. But once again, Blazor forces you to have special infrastructure, because suddenly you get massive pressure to setup a complex CDN in front of your app to cache all those wasm binaries and deliver them to your users instead of directly from your cloud provider.
+Not to mention, cloud has egress costs. CDNs aren't free. So once again, Blazor forces you to have special infrastructure. Suddenly you get massive pressure to set up a complex CDN in front of your app to cache all those wasm binaries and deliver them to your users instead of directly from your cloud provider. The _I just want to write C#_ target audience better dust off their devops knowledge too.
 
-One other thing is that WASM for UI is a lie. WASM cannot access the DOM in any capacity. There has been incredible amounts R&D that has gone into [the `ReactDOM` package](https://www.newline.co/@KumailP/a-closer-look-at-reactdomrender-the-need-to-know-and-more--891fed64). With WASM the rendering first happens in WASM, then it gets serialized as text to the JS layer, which then does the actual DOM replacement. WASM could not be any more steps removed from the browser even if it was running as a separate app on my machine.
+One other thing is that WASM for UI kinda sucks. Wasm does not have direct access to the DOM. All interactions must go through JavaScript "bridges" or APIs, which adds overhead and complexity. Every time Wasm code needs to interact with browser APIs (like the DOM, events, or even basic things like `alert()`), it must call out to JavaScript. The JavaScript ecosystem has decades of mature, well-supported UI libraries and frameworks. There has been incredible amounts research that has gone into [the `ReactDOM` package](https://www.newline.co/@KumailP/a-closer-look-at-reactdomrender-the-need-to-know-and-more--891fed64) in particular. With WASM, as far as I know, the rendering first happens in WASM, then it gets serialized as text to the JS layer, which then does the actual DOM replacement. WASM could not be any more steps removed from the browser even if it was running as a separate app on my machine.
 
 ### Auto render mode
 
-.Net 8 introduced the Auto render mode. This is actually an interactive render mode, that first starts out as `InteractiveServer` and in the background starts downloading the WASM files. This means the user has a very short time to interactivity, and while the browser downloads and parses the wasm, they get to use the app. And once WASM is on the client, when the user navigates to a new route, the framework switches over to the WASM code and (hopefully) terminates the websocket since it is no longer needed. The irony of Blazor is that the best render mode is quite literally the worst of all worlds. Because you still need the special infra for the websockets, and you also need the CDN to cache the megabytes of WASM files you'll serve to your client. Just for the _pleasant_ user experience of having a functional app.
+.NET 8 introduced the `InteractiveAuto` render mode which is now the intended default for interactivity. This is a render mode that first starts out as `InteractiveServer` and in the background starts downloading the WASM files. This means the user has a very short time to interactivity, and while the browser downloads and parses the wasm, they get to use the app. Once WASM is on the client and the user navigates to a new route (or revisits the app), the framework switches over to the client code and (hopefully) terminates the websocket since it is no longer necessary.
 
-### Why all of these suck
+The irony of Blazor is that the best render mode is quite literally the worst of all worlds. Because you still need the special infra for the websockets, and you also need the CDN to cache the megabytes of WASM files you'll serve to your client. Just for the _bare minimum_ user experience of having a functioning app without seconds of load times.
 
-If the actual technical considerations weren't enough. Here's more.
+### So why do all of them suck?
 
 #### <span id="dependency-injection">Dependency injection</span>
 
-Blazor absolutely shits into .Net's dependency injection framework. Blazor is a completely different achitectural paradigm that imo will never take off, because it's so complex. If you thought that Next.js server actions have gotchas, you haven't seen nothing yet. (And I'm not talking about having to wire up dependencies twice)
+Blazor absolutely shits into .NET's dependency injection framework. Blazor is a completely different architectural paradigm that in my opinion, is orders of magnitudes harder to grasp for a `non-frontend dev, who just knows C#` than if you just taught them `React` for a week. If you thought that [Next.js server actions have gotchas](https://youtu.be/yUm-ET8w_28), you haven't seen nothing yet. (And I'm not talking about having to wire up dependencies twice in both the client and server projects, I can live with that.)
 
 ##### Static render mode
 
-Static render mode works with the classic ASP.NET Core experience. A request is a scope. Scoped dependencies resolve. The request moves from middleware to middleware to build up the context for the request. Who is the user, which tenant they belong to, what they have access to, which services are scoped etc. Very simple.
+Static render mode plays nicely with the classic ASP.NET Core experience. (Well sort of, but that's in the authentication section.) **A request is a scope.** Scoped dependencies are resolved. The request moves from middleware-to-middleware to build up the context. Who is the user, which tenant they belong to, what they have access to etc. Very simple.
 
 ##### Interactive Server
 
-Interactive Server on the other hand is based on Signalr, which means once the circuit opens that whole circuit becomes **the scope**. Except that it doesn't. [You have to setup a special hack](https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/dependency-injection?view=aspnetcore-9.0#access-server-side-blazor-services-from-a-different-di-scope) to access scoped services in server side services. This sneaks in the service locator pattern into your codebase and **you cannot get rid of it**. **ANY** code that **MAY** be use by both the static render pipeline and the circuit pipeline, means you will have to use this special service locator. This increases the complexity of your code because it hides the real dependencies and makes testing harder. This is also a leaky abstraction that can spread to your whole codebase if you don't actively fight it with fire and avoid as many scenarios as possible.
+Interactive Server, on the other hand, is based on Signalr, which means once the circuit opens that the whole circuit becomes **the scope**. Except that it doesn't. [You have to set up a special hack](https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/dependency-injection?view=aspnetcore-9.0#access-server-side-blazor-services-from-a-different-di-scope) to access scoped services in server side services. This sneaks in the service locator pattern into your codebase, and **you cannot get rid of it**. **ANY** code that **MAY** be used by both the static render pipeline and the interactive server pipeline, means you will have to use this special service locator to resolve your dependencies. This increases the complexity of your code because it hides the real dependency tree and makes testing harder. This is also a leaky abstraction that can spread to your whole codebase if you don't actively fight it with the business end of a tea kettle and avoid as many scenarios as possible.
+
+> In case you're wondering which side is the business end of a tea kettle. The answer is all of them if you throw it hard enough.
 
 ##### WebAssembly
 
-In WebAssembly the _scope_ is the full webassembly app itself. So every scoped service in webassembly is a singleton since the app starts and creates the services and a new scope is never created in it's lifetime.
+In WebAssembly the _scope_ is the full webassembly app itself. So every scoped service in webassembly is a singleton since the app starts and creates the services and a new scope is never created in its lifetime. What this means in practice is that if you register a scoped service, it will fail to resolve, so you have to register them as singletons or transient. This is actually fairly straightforward, but it's yet another rake you can step into.
 
 ##### It's actually still not this simple
 
-All of the above is true, however, with one extra spin. The individual components in Blazor (`razor` files) while share the same scope, are rendered concurrently. This is a classic pitfall with tools like Entity Framework Core, which is not thread safe, so a single instance cannot be used concurrently. This once again forces your entire app to use a factory and create an instance for each component you use it in, which adds mental overhead most importantly because:
+All of the above is true; however, there is one extra spin. The individual components in Blazor (`razor` files) while share the same scope, are rendered concurrently. This is a classic pitfall with tools like `Entity Framework Core`, which is not thread safe, so a single instance cannot be used concurrently. Once again, you are forced to write your entire app [to use the factory pattern](https://learn.microsoft.com/en-us/aspnet/core/blazor/blazor-ef-core?view=aspnetcore-9.0#new-dbcontext-instances) and create an instance for each component you use it in, which adds mental overhead because:
 
-- you have to remember to do this
-- forces you to engineer over Blazor and spend time building these hacks instead of your app
+1. you have to remember to do this
+2. you are forced to engineer over Blazor and spend time building these workarounds instead of your app
 
-So what does this all mean? It means that every code you write you either
+##### So what does this all mean?
 
-- Have to be aware which parts of the app will use it, and remember to prevent it from being used elsewhere
-- Have to write code that is DI lifecycle agnostic, which either forces you into anti-patterns, or just simply adds a minimum 2x cost to every single line of code you produce.
+It means that for every line of code you write you either:
 
-#### Authentication
+- Have to be aware which parts of the app will use it
+    - and remember to prevent it from being used elsewhere
+- Have to write code that is DI lifecycle agnostic, which either:
+    - forces you into antipatterns,
+    - or just simply adds a minimum 2x cost to every single line of code you produce.
 
-Authentication is a very sensitive part of any app. .Net actually has some great abstractions to solve this. This works relatively well for Static rendered apps.
+This is a surprising level of complexity for the `Front-end web development made easy with C#` claim.
 
-The issue is, I spent weeks trying to wrap my head around how authentication is supposed to work in Blazor. And the problem once again comes from the 3 render modes and services being scoped differently. And the framework itself had to be fought many, many times along the way. Since all the Blazor docs' complexity stops at `Hello world` and to my knowledge there are no OSS blazor apps, so it is challenging to find examples of a complete functioning authentication setup in Blazor.
+## Authentication
 
-## JS Interop sucks
+After recovering from the sweet embrace of a brain hemorrhage, I was able to sort of figure out how one would need to do authentication to a Blazor app.
 
-The browser does not allow WASM to access any of the traditional resources. This means that if we want to access the simplest of things, like the clipboard, we need javascript to handle that and somehow pass it to Blazor. This means we are FORCED to use an interactive rendermode, which is bad for reasons listed above. However the complete irony of Blazor is that it sells you the utopia of _Writing all of your code in C# and Razor_, so that you don't need javascript, but then you have to use JS anyway for the most trivial of things.
+Authentication is a very sensitive part of any app. .NET actually has some good abstractions to solve this. Which works relatively well for Static rendered apps.
 
-- Non http only cookie
-- Browser apis (gps, clipboard, localstorage etc)
-- Rendering UI
+-- todo: add examples from repo
 
-The actual mechanism for JS interop is not horrible, although JS to .NET is very disgusting, but this is not any different from standard FFI in with languages. For the JS side it relies heavily on ESM, which is good, but some purists disagree.
+The issue is, I spent weeks total over the past year trying to wrap my head around all of this. And the problem once again originates from the three render modes and services being scoped differently. And the framework itself had to be fought many, many times along the way. Since all the Blazor docs' complexity stops at `Hello world` and to my knowledge there are no OSS blazor apps, so it is challenging to find examples of a complete functioning authentication setup in Blazor. Whereas I recently discovered that [the Next.js repository has a ton of examples](https://github.com/vercel/next.js/tree/canary/examples) for all the various integrations that exist for Next.
 
-The browser runs JS. The web was built on JS. If the library you want to use does not have a Blazor wrapper already then congratulations, you get to spend at best weeks writing a library that is not your app, months at worst. If you use React then literally everything has a React integration already. Blazor is sold as being able to iterate fast for devs who know C# but don't know JS. But this is a lie, because Blazor does not have the library support that JS apps do, and even the least complex apps out there will need to use at least some of these, or spend time developing their own. If we were an R&D company, it would make sense to invest into making our own libraries.
+## JS Interop not only sucks, it is literally unavoidable
 
-But if you do create a wrapper, because dotnet is not in the JS ecosystem it is 10x harder to integrate it with JS libraries. Thankfully [Vite can get us 80% of the way there](https://vite.dev/guide/backend-integration.html), but again this adds such complexity to solve that is not spent on making our app, but rather spent solving all these problems that are caused directly by the technology choice.
+The browser does not allow WASM to access any of the usual suspect resources that a simple js app would be able to. This means that if we want to access like the clipboard, we need JavaScript to handle that and somehow pass this data to Blazor. This means we are **FORCED** to use an interactive render mode, which I already don't like.
 
-## Razor templating vs JSX
+Once again, the complete irony of Blazor is that it sells you the utopia of _Writing all of your code in C# and Razor_, so that you don't need JavaScript. Only to then force you to use JS anyway for the most trivial of things.
 
-[React won](https://youtu.be/P1FLEnKZTAE) and by extension JSX won. We can argue all day, about angular, svelte, vue. Yes you are all wrong. JSX is the superior _templating_ language. The massive adoption of React forced them to hyper fine tune the tooling layer of the language.
+The actual mechanism for JS interop is not horrible, although JS to .NET is kinda disgusting, but this is not any different from any kind of `FFI` boundary with languages. For the JS side it relies heavily on ESM, which is the correct choice at least.
 
-The unquestionable benefit of JSX is that you are JUST writing javascript that runs from top to bottom. The JSX is within your JS code. With Razor it's the opposite. You are always writing Razor, and Razor itself is something you would see in a Clan Moulder campaign. It is a weird mutation of C#, Html, and inline c# like templating. It does not use Roslyn in the traditional sense, the different parts of it are compiled differently. A Razor file is actually source generated in the background to many smaller files. This per se adds a whole bunch of complexity to the build, but that's for the SDK team to solve.
+We can't forget one important fact, though. The browser runs JavaScript. The web was built on JavaScript. If the library you want to use does not have a Blazor wrapper already, then congratulations, you get to spend weeks at best (months at worst) writing a library that is not your app. If you use React, then literally everything has a React wrapper already. Blazor is sold as being able to iterate fast for devs who know C# but don't know JS. But this is just not true. Blazor does not have the vast library support that JS apps do, and even the least complex apps out there will need to use at least some of these or spend time developing their own. If you were an R&D company, it would make sense to invest in making your own libraries, but most of you are just making a CRUD app that connects various services.
 
-Here's the fun part. Razor is the be all end all solution of .Net. `ReactDOM` is a libary built on top of JSX. In React you can do the spread attributes (`{...props}`) syntax. Which you can also do in Razor although the syntax is very ugly comparetivly. However unlike in Razor, you can strongly type props in React. For example my button component can be typed to only accept button legal attributes from the caller, like `onclick`, `id` etc, but NOT `href`, `referrer` etc. This means that at coding time I can enforce type safety by not misusing my component. In Blazor you cannot do that, you can only blanket forward additional attributes to a component down the chain, which means you get zero type inference at the caller level. This is just one example, but **these DX wins add up**.
+And to add insult to injury, this is what Microsoft claims on the blazor website:
 
-And this is seemingly an unsolvable problem on Razor's side. There is no motivation from the .Net team to implement such feature, in fact if your component does not support prop spreading, [there isn't even a warning on the callsite](https://github.com/dotnet/razor/issues/11114). The so called strongly typed language benefits of C# completely fall apart and are put to shame by - of all things - javascript.
+> ### Enhance your Blazor experience with great tooling
+>
+> Leverage rich tooling for Blazor in Visual Studio Code and Visual Studio to get started fast using built-in project templates and scaffolding, hot reload, and AI-powered code editing.
 
-## Microsoft manages to never use it's own UI frameworks
+I honestly don't know what tooling they are talking about. It is clear Microsoft has never once made an app with Vite, because to _claim_ Blazor has hot reload is like \{todo: joke\}
 
-To real metric to see if a Microsoft technology has a future is to see if they themselves use it. YARP for example is amazing, and [Azure App Service uses YARP as its proxy](https://devblogs.microsoft.com/dotnet/bringing-kestrel-and-yarp-to-azure-app-services/).
+But if you do want to create a wrapper, because dotnet is not in the JS ecosystem, it is 10x harder to integrate it with JS libraries. Thankfully, [Vite can get us 80% of the way there](https://vite.dev/guide/backend-integration.html), but the remaining 20% once again adds such complexity that you're not working on your app, but building out these libraries and integrations.
+
+## Razor templating vs. JSX
+
+According to some, [React won](https://youtu.be/P1FLEnKZTAE) and by extension JSX won. We can argue all day, about Angular, Svelte, Vue, or even HTMX. But I think JSX is the superior _templating_ language. The massive adoption of React forced them to hyper fine-tune the tooling layer of the language.
+
+The unquestionable benefit of JSX is that you are JUST writing JavaScript that runs from top to bottom. The JSX is within your JS code. With Razor it's the opposite. You are always writing Razor, and the internals of Razor itself is something you would see in a Clan Moulder disaster campaign. It is an eccentric mutation of C#, HTML, and inline C# like templating. The different parts of it are compiled differently. A Razor file is actually source-generated into many smaller files. This per se adds a bunch of complexity to the build, but that's for the SDK team to solve. I don't envy the team that has to maintain this language without breaking existing apps but also support the newer requirements of Blazor.
+
+Here's the fun and/or sad part. Razor is the be all end-all solution of .NET for a frontend templating language. While `ReactDOM` is a library built on top of JSX. In React, you can do the spread attributes (`{...props}`) syntax. Which you can also do in Razor although the syntax is hideous comparatively. However, unlike in Razor, you can strongly type props in React. For example, my button component can be typed to only accept button legal attributes from the caller, like `onclick`, `id` etc., but NOT `href` or `referrer`. This means that at coding time I can enforce type safety by not misusing my components. In Blazor, you cannot do that, you can only blanket forward additional attributes to a component down the chain, which means you get zero type inference at the caller level. This is just one example, but **these DX wins/losses add up**.
+
+The so-called strongly typed language benefits of C# completely fall apart and are put to shame by — of all things — JavaScript.
+
+## Microsoft manages to never use its own UI frameworks
+
+The real metric to see if a Microsoft technology has a future is to see if they themselves use it. YARP, for example, is pretty good, and [Azure App Service uses YARP as its proxy](https://devblogs.microsoft.com/dotnet/bringing-kestrel-and-yarp-to-azure-app-services/).
 
 Blazor on the other hand, [has an uncertain future](https://youtu.be/2uLGXe95kTo). Blazor is in the unfortunate downward spiral of:
 
@@ -143,17 +163,19 @@ Blazor on the other hand, [has an uncertain future](https://youtu.be/2uLGXe95kTo
 - Adoption goes lower
 - Repeat
 
-Compare this to [Bun](https://bun.sh/) which is disrupting the NodeJS ecosystem and is skyrocketing to replace it in almost all real world scenarios.
+They claim that the numbers are going up year over year. However, I would be curious to see what the retention is on Blazor. Really any kind of frontend framework vendor locks you into them. I don't doubt Blazor is popular in the `I haven't used it yet, so let's try it out` crowd. And I believe some enterprises adopt it for their apps. But I want to see how many of them totally regret picking Blazor and wish it wasn't that expensive to rewrite it in anything else.
 
-Microsoft Teams famously went under a rewrite a few years ago and Microsoft somehow managed to not use any of the 5+ UI frameworks they were still actively developing at the time, [and went with React](https://tomtalks.blog/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/). I hate teams as much as the next person, but React is not the reason why Teams sucks.
+Compare this to [Bun,](https://bun.sh/) which is disrupting the NodeJS ecosystem and is skyrocketing to replace it in almost all real world scenarios. It receives heavy criticism from the `live by the Node, die by the Node` community, but I think the tool speaks for itself, and it continues to prioritize good DX over the [`design by committee: try to appease everyone and end up angering everyone`](https://socket.dev/blog/node-js-takes-steps-towards-removing-corepack) competitor.
+
+Microsoft Teams also famously went under a rewrite a few years ago, and Microsoft somehow managed to not use any of the 5+ UI frameworks they were still actively developing at the time, [and went with React](https://tomtalks.blog/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/). I hate Teams as much as the next person, but React is not the reason why Teams sucks.
 
 ## Blazor is part of dotnet, which is not good enough for the web
 
-Dotnet has a very specific enterprise-y support cycle. But for the web frontend, this is not good enough. Waiting 2+ years for features on frontend is an eternity. The web moves very fast, and Blazor will never be able to keep up, unless development picks up and adoption goes much higher. If you're missing a feature in Blazor, your BEST chance is to wait for a full year until it's added in the next release. If you're missing a feature in Next.js, you can bully the CEO personally on Twitter and have it added.
+.NET has a very specific enterprise-y support cycle. But for the web frontend, this is not good enough. Waiting 2+ years for features on the frontend is an eternity. The web moves very fast, and Blazor will never be able to keep up, unless development picks up and adoption goes much higher. If you're missing a feature in Blazor, your BEST chance is to wait for a full year until it's added in the next release. If you're missing a feature in Next.js, you can bully the CEO personally on Twitter and have it added.
 
-According to the principal product manager of ASP.NET Core Daniel Roth, Blazor has 6 active developers on it. That means that the three frontend developers at my job writing the Blazor app are 50% of the allocation that a Fortune 500 company is able to afford on the technology we use. On the face of this, it would be fine, but teams of smaller sizes are able to iterate much faster on comparable frameworks without the backing of Microsoft. The dotnet support cycle may not be the real bottleneck, because reading the release notes year over year the amount of features are not scaling with the time gap between releases.
+According to the principal product manager of ASP.NET Core, Daniel Roth, [Blazor has six active developers on it](https://youtu.be/2uLGXe95kTo). That means that the three frontend developers at my work writing the Blazor app are 50% of the allocation that a Fortune 500 company is able to afford on the technology they push as the future of .NET frontend. On the face of this, it would be fine, but teams of smaller sizes are able to iterate much faster on comparable frameworks without the backing of Microsoft. The dotnet support cycle may not be the real bottleneck, because, reading the release notes year over year, the number of features is not scaling with the time gap between releases.
 
-The [aspnetcore repo on GitHub](https://github.com/dotnet/aspnetcore) has about 1300 contributors. Let's say 20% of these contributors are for the Blazor side of things (and this is unrealisticly generous). Compare that to [Next.js](https://github.com/vercel/next.js)'s 3500, [React's](https://github.com/facebook/react) 1700, [Django](https://github.com/django/django) has 2600, and even [Laravel](https://github.com/laravel/laravel) has 600 contributors. The numbers speak for themselves, adoption is much greater for these other frameworks. Not to mention by extension the tooling.
+The [aspnetcore repo on GitHub](https://github.com/dotnet/aspnetcore) has about 1300 contributors. Let's say 20% (260) of these contributors are for the Blazor side of things (and this is unrealistically generous). Compare that to [Next.js](https://github.com/vercel/next.js)'s 3500, [React's](https://github.com/facebook/react) 1700, [Django](https://github.com/django/django) has 2600, or even [Laravel](https://github.com/laravel/laravel) has 600 contributors. The numbers speak for themselves, adoption is much greater for these other frameworks. Not to mention by extension the tooling surrounding them.
 
 ## Missing tooling
 
@@ -189,5 +211,5 @@ Blazor WASM currently is a cake that's a lie. [It has no multithreading](https:/
 
 Blazor is a good solution if the current year is 2014 (2 years before the release of .NET Core). Web UI development has evolved a lot since then, and it is currently living its Renaissance. Yes, learning React is a cost, but I argue the cost-benefit is heavily against Blazor, because the initial `oh I can easily render html` wears off once you add auth, state management, external services, components, or any medium complexity feature. None of the render modes work for you, but against you. Whereas React is very very mature, has amazing tooling, and is very easy to pick up. And you may say, okay but `our team already knows C#`, however for the reasons listed above, Blazor itself greatly offsets this benefit. Learning the specifics of Blazor will be harder for C# devs, than just learning React.
 
--- todo: rant about mixed attribute mode in Blazor, c#, and html mode vs React
+-- todo: rant about mixed attribute mode in Blazor, c#, and html mode vs React  
 -- todo: rant about how to pass fragments as children in react vs Blazor
