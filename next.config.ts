@@ -5,6 +5,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  output: 'standalone',
 };
 
 const withMDX = createMDX({
@@ -41,4 +42,5 @@ export default withSentryConfig(withMDX(nextConfig), {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
+  telemetry: !process.env.CI,
 });

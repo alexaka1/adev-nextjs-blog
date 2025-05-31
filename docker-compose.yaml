@@ -1,0 +1,22 @@
+name: blog
+services:
+  web:
+    build:
+      context: .
+      secrets:
+        - SENTRY_AUTH_TOKEN
+      args:
+        - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
+        - CI=true
+        - VERCEL_PROJECT_PRODUCTION_URL=${VERCEL_PROJECT_PRODUCTION_URL}
+    environment:
+      - CI=true
+      - NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
+      - SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+      - VERCEL_PROJECT_PRODUCTION_URL=${VERCEL_PROJECT_PRODUCTION_URL}
+secrets:
+  NEXT_PUBLIC_SENTRY_DSN:
+    environment: NEXT_PUBLIC_SENTRY_DSN
+  SENTRY_AUTH_TOKEN:
+    environment: SENTRY_AUTH_TOKEN
