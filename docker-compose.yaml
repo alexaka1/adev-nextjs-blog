@@ -17,7 +17,7 @@ services:
       - SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
       - VERCEL_PROJECT_PRODUCTION_URL=${VERCEL_PROJECT_PRODUCTION_URL}
     healthcheck:
-      test: [ "CMD-SHELL", "wget --spider --timeout=5 --tries=1 http://localhost:3000 || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --timeout=5 --tries=1 http://127.0.0.1:3000 || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 3
