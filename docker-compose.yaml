@@ -5,6 +5,7 @@ services:
       context: .
       secrets:
         - SENTRY_AUTH_TOKEN
+        - NEXT_PUBLIC_SENTRY_DSN
       args:
         - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
         - CI=true
