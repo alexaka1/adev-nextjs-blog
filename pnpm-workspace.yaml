@@ -1,10 +1,13 @@
 onlyBuiltDependencies:
   - '@sentry/cli'
   - '@tailwindcss/oxide'
+  - sharp
+  - unrs-resolver
 packageManagerStrictVersion: true
 publicHoistPattern:
   - '*eslint*'
   - '*@nextui-org/*'
   - '@t3-oss/*'
   - '@sentry/core'
+  - '@wooorm/starry-night'
 savePrefix: ''
