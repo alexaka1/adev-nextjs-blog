@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   output: 'standalone',
+  experimental: {
+    mdxRs: true,
+  },
 };
 
 const withMDX = createMDX({
