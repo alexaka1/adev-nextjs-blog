@@ -7,4 +7,5 @@ publicHoistPattern:
   - '*@nextui-org/*'
   - '@t3-oss/*'
   - '@sentry/core'
+  - '@wooorm/starry-night'
 savePrefix: ''
