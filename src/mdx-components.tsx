@@ -38,6 +38,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     }: PropsWithChildren & AnchorHTMLAttributes<typeof Link>) => (
       <Link
         href={href ?? '#'}
+        target={`_blank`}
         className="font-mono text-main underline transition-colors hover:text-main/80"
       >
         {children}
