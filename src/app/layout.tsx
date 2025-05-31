@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import '../../node_modules/@wooorm/starry-night/style/both.css';
 import Header from '@/app/components/header';
 import Footer from '@/app/components/footer';
 import { ThemeProvider } from '@/app/components/theme-provider';

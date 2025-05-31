@@ -2,6 +2,16 @@ import type { MDXComponents } from 'mdx/types';
 import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
 import { type AnchorHTMLAttributes, type PropsWithChildren } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -58,6 +68,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         alt={props.alt}
       />
     ),
+    table: ({ children }) => <Table>{children}</Table>,
+    thead: ({ children }) => <TableHeader>{children}</TableHeader>,
+    tbody: ({ children }) => <TableBody>{children}</TableBody>,
+    tfoot: ({ children }) => <TableFooter>{children}</TableFooter>,
+    tr: ({ children }) => <TableRow>{children}</TableRow>,
+    th: ({ children }) => <TableHead>{children}</TableHead>,
+    td: ({ children }) => <TableCell>{children}</TableCell>,
+    caption: ({ children }) => <TableCaption>{children}</TableCaption>,
     ...components,
   };
 }
