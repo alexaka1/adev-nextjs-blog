@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { type Metadata } from 'next';
 import { Pagination } from '@/components/pagination';
+import ClientDate from '@/app/components/client-date';
 import {
   Card,
   CardContent,
@@ -56,9 +57,7 @@ export default async function BlogIndexPage({
                       <span className={`sr-only`}>on</span>
                       <span aria-hidden={true}>•</span>
                       <time dateTime={post.metadata.publishedAt}>
-                        {new Date(
-                          post.metadata.publishedAt,
-                        ).toLocaleDateString()}
+                        <ClientDate date={post.metadata.publishedAt} />
                       </time>
                     </CardDescription>
                   </CardHeader>

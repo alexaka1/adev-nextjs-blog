@@ -3,6 +3,7 @@ import { type Metadata } from 'next';
 import { getBlogPosts } from '@/content/utils';
 import { baseUrl } from '@/app/sitemap';
 import { customComponents } from '@/mdx-components';
+import ClientDate from '@/app/components/client-date';
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -87,7 +88,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <span className={`sr-only`}>on</span>
             <span>
               <time dateTime={post.metadata.publishedAt}>
-                {new Date(post.metadata.publishedAt).toLocaleDateString()}
+                <ClientDate date={post.metadata.publishedAt} />
               </time>
             </span>
           </span>

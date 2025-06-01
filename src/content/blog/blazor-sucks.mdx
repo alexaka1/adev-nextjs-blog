@@ -31,13 +31,13 @@ But first, I want to get my biases out of the way. My job for the past 6 months 
 
 I will get to the pros later. I am going to start with the cons whether you like or not.
 
-## [The 3 render modes](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-9.0#render-modes) all suck
+## The 3 render modes all suck
 
 Blazor is actually handy for a fully static, server-rendered app, with no interactivity. That workflow has a much nicer DX than what we had in MVC or Razor Pages. This is mainly because you can finally define reusable component fragments and not just full pages, or without [the awful partial views](https://learn.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-9.0).
 
 The problems start coming as you move from `Hello world!` to more complex apps.
 
-If using any two out of the three render modes, your app's complexity grows exponentially and the two modes leak into each other in the most disgusting sneaky ways possible. And I argue that you really can't pick just one of them and call it a day.
+If using [any two out of the three render modes](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-9.0#render-modes), your app's complexity grows exponentially and the two modes leak into each other in the most disgusting sneaky ways possible. And I argue that you really can't pick just one of them and call it a day.
 
 ### Static render mode / pre-rendering
 
