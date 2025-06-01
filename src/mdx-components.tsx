@@ -3,10 +3,8 @@ import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
 import {
   type AnchorHTMLAttributes,
-  JSX,
   type PropsWithChildren,
-  ReactElement,
-  ReactNode,
+  type ReactNode,
 } from 'react';
 import {
   Table,
@@ -150,9 +148,9 @@ function slugify(str: any): string {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       .replace(/&/g, '-and-') // Replace & with 'and'
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
+      .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .replace(/\-\-+/g, '-')
+      .replace(/--+/g, '-')
   ); // Replace multiple - with single -
 }
 
