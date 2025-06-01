@@ -41,6 +41,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "rehype-starry-night": "2.2.0",
+    "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.1",
     "tailwind-merge": "3.3.0",
     "zod": "3.25.46"
