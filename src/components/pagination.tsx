@@ -34,7 +34,7 @@ export function Pagination({
 
   // Calculate which page numbers to show
   const getPageNumbers = () => {
-    const pages = [];
+    const pages: (number | 'ellipsis-start' | 'ellipsis-end')[] = [];
 
     // Always show first page
     pages.push(1);
@@ -98,7 +98,7 @@ export function Pagination({
           return (
             <PaginationItem key={page}>
               <PaginationLink
-                href={getPageUrl(page as number)}
+                href={getPageUrl(page)}
                 isActive={page === currentPage}
               >
                 {page}

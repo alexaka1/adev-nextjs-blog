@@ -1,11 +1,8 @@
 import { notFound } from 'next/navigation';
-import { getAllBlogPosts, getBlogPostBySlug } from '@/lib/blog';
 import { type Metadata } from 'next';
 import { getBlogPosts } from '@/content/utils';
 import { baseUrl } from '@/app/sitemap';
-import { MDXRemote } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import { useMDXComponents } from '@/mdx-components';
+import { customComponents } from '@/mdx-components';
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -23,21 +20,20 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: BlogPostPageProps): Promise<Metadata | null> {
+}: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = getBlogPosts().find((post) => post.slug === slug);
   if (!post) {
-    return null;
+    return {};
   }
 
-  let {
+  const {
     title,
     publishedAt: publishedTime,
     summary: description,
     image,
   } = post.metadata;
-  let ogImage =
-    image ? image : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
+  const ogImage = image ?? `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
@@ -78,9 +74,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <div className="container mx-auto py-8">
       <article className="prose prose-lg dark:prose-invert mx-auto">
-        <h1 className="mt-8 mb-4 font-mono text-4xl font-extrabold tracking-tight capitalize">
-          {post.metadata.title}
-        </h1>
+        <customComponents.h1>{post.metadata.title}</customComponents.h1>
         <span
           className={`mt-2 mb-4 text-xl font-light text-gray-600 italic dark:text-foreground/75`}
         >
@@ -99,15 +93,4 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </article>
     </div>
   );
-}
-
-function slugify(str) {
-  return str
-    .toString()
-    .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-'); // Replace multiple - with single -
 }
