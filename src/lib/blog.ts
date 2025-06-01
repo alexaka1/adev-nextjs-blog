@@ -12,18 +12,16 @@ export interface BlogPost {
 // Get all blog posts
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
-  const directories = fs.readdirSync(blogDir).filter(
-    (dir) =>
-      fs.statSync(path.join(blogDir, dir)).isDirectory() &&
-      !dir.startsWith('[') && // Exclude dynamic route directories
-      dir !== 'components', // Exclude components directory if it exists
+  const files = fs.readdirSync(blogDir).filter(
+    (file) =>
+      file.endsWith('.mdx') &&
+      !file.startsWith('[') && // Exclude dynamic route files
+      fs.statSync(path.join(blogDir, file)).isFile()
   );
 
   const posts = await Promise.all(
-    directories.map(async (dir) => {
-      const filePath = path.join(blogDir, dir, 'page.mdx');
-      if (!fs.existsSync(filePath)) return null;
-
+    files.map(async (file) => {
+      const filePath = path.join(blogDir, file);
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
       // Extract frontmatter using regex
@@ -37,8 +35,11 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 
       if (!titleMatch || !dateMatch) return null;
 
+      // Extract slug from filename (remove .mdx extension)
+      const slug = file.replace(/\.mdx$/, '');
+
       return {
-        slug: dir,
+        slug,
         title: titleMatch[1],
         date: dateMatch[1],
         author: authorMatch ? authorMatch[1] : 'Unknown',

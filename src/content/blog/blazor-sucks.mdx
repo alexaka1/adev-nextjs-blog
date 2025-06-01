@@ -1,6 +1,11 @@
 export const title = "Blazor sucks";
 export const date = "2025-05-31";
 export const author = "Alex Martossy";
+/** @type import('next').Metadata */
+export const metadata = {
+    title: title,
+    authors: [author],
+};
 
 # {title}
 
@@ -137,9 +142,7 @@ We can't forget one important fact, though. The browser runs JavaScript. The web
 
 And to add insult to injury, this is what Microsoft claims on the blazor website:
 
-> ### Enhance your Blazor experience with great tooling
->
-> Leverage rich tooling for Blazor in Visual Studio Code and Visual Studio to get started fast using built-in project templates and scaffolding, hot reload, and AI-powered code editing.
+> ### Enhance your Blazor experience with great toolingLeverage rich tooling for Blazor in Visual Studio Code and Visual Studio to get started fast using built-in project templates and scaffolding, hot reload, and AI-powered code editing.
 
 I honestly don't know what tooling they are talking about. It is clear Microsoft has never once made an app with Vite, because to _claim_ Blazor has hot reload is like \{todo: joke\}
 
