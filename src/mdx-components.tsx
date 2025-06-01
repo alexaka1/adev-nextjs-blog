@@ -1,11 +1,7 @@
 import type { MDXComponents } from 'mdx/types';
 import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
-import {
-  type AnchorHTMLAttributes,
-  type PropsWithChildren,
-  type ReactNode,
-} from 'react';
+import { type AnchorHTMLAttributes, type ReactNode } from 'react';
 import {
   Table,
   TableBody,
@@ -33,6 +29,7 @@ export const customComponents = {
   },
 };
 
+// noinspection JSUnusedGlobalSymbols
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: customComponents.h1,
@@ -154,9 +151,7 @@ function slugify(str: any): string {
   ); // Replace multiple - with single -
 }
 
-function CustomLink(
-  props: PropsWithChildren & AnchorHTMLAttributes<typeof Link>,
-) {
+function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
   const href = props.href ?? '#';
 
   if (href.startsWith('/')) {
