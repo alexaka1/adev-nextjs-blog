@@ -4,7 +4,6 @@ import { type Metadata } from 'next';
 import { Pagination } from '@/components/pagination';
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -12,9 +11,9 @@ import {
 } from '@/components/ui/card';
 
 interface BlogIndexPageProps {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
-  };
+  }>;
 }
 
 export const metadata: Metadata = {
@@ -25,7 +24,9 @@ export const metadata: Metadata = {
 export default async function BlogIndexPage({
   searchParams,
 }: BlogIndexPageProps) {
-  const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+  const searchParamsAwaited = await searchParams;
+  const currentPage =
+    searchParamsAwaited.page ? parseInt(searchParamsAwaited.page) : 1;
   const pageSize = 5; // Number of posts per page
 
   const {

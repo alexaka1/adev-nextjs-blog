@@ -3,16 +3,16 @@ import { getAllBlogPosts, getBlogPostBySlug } from '@/lib/blog';
 import { type Metadata } from 'next';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate metadata for the page
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getBlogPostBySlug(params.slug);
+  const post = await getBlogPostBySlug((await params).slug);
 
   if (!post) {
     return {
@@ -41,7 +41,8 @@ export async function generateStaticParams() {
 
 // Blog post page component
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getBlogPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -49,7 +50,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   // Import the MDX content dynamically
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const MDXContent = await import(`@/content/blog/${params.slug}.mdx`);
+  const MDXContent = await import(`@/content/blog/${slug}.mdx`);
 
   return (
     <div className="container mx-auto py-8">

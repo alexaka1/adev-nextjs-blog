@@ -16,21 +16,19 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     (file) =>
       file.endsWith('.mdx') &&
       !file.startsWith('[') && // Exclude dynamic route files
-      fs.statSync(path.join(blogDir, file)).isFile()
+      fs.statSync(path.join(blogDir, file)).isFile(),
   );
 
   const posts = await Promise.all(
-    files.map(async (file) => {
+    files.map((file) => {
       const filePath = path.join(blogDir, file);
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
       // Extract frontmatter using regex
-      const titleMatch = fileContent.match(
-        /export const title = ["'](.+)["'];/,
-      );
-      const dateMatch = fileContent.match(/export const date = ["'](.+)["'];/);
-      const authorMatch = fileContent.match(
-        /export const author = ["'](.+)["'];/,
+      const titleMatch = /export const title = ["'](.+)["'];/.exec(fileContent);
+      const dateMatch = /export const date = ["'](.+)["'];/.exec(fileContent);
+      const authorMatch = /export const author = ["'](.+)["'];/.exec(
+        fileContent,
       );
 
       if (!titleMatch || !dateMatch) return null;
@@ -59,13 +57,13 @@ export async function getBlogPostBySlug(
   slug: string,
 ): Promise<BlogPost | null> {
   const posts = await getAllBlogPosts();
-  return posts.find((post) => post.slug === slug) || null;
+  return posts.find((post) => post.slug === slug) ?? null;
 }
 
 // Get paginated blog posts
 export async function getPaginatedBlogPosts(
-  page: number = 1,
-  pageSize: number = 5,
+  page = 1,
+  pageSize = 5,
 ): Promise<{
   posts: BlogPost[];
   totalPosts: number;
