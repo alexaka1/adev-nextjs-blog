@@ -82,11 +82,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </span>
         <p>
           <span className={`mb-8 flex items-center space-x-2 text-sm`}>
-            By {post.metadata.author}
-            {' | '}
-            <time dateTime={post.metadata.publishedAt}>
-              {new Date(post.metadata.publishedAt).toLocaleDateString()}
-            </time>
+            <span>By {post.metadata.author}</span>
+            <span aria-hidden={true}>|</span>
+            <span className={`sr-only`}>on</span>
+            <span>
+              <time dateTime={post.metadata.publishedAt}>
+                {new Date(post.metadata.publishedAt).toLocaleDateString()}
+              </time>
+            </span>
           </span>
         </p>
         <MDXContent.default />
