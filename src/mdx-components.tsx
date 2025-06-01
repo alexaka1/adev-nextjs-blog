@@ -15,6 +15,7 @@ import {
 
 export const customComponents = {
   h1: ({ children }: { children: ReactNode }) => {
+    // @ts-expect-error I don't know what types I should define here, but this works at runtime
     const slug = slugify(children);
     return (
       <h1
@@ -34,10 +35,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: customComponents.h1,
     h2: ({ children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
         <h2
-          id={slugify(children)}
+          id={slug}
           className="mt-8 mb-4 font-mono text-3xl font-bold tracking-tight capitalize"
         >
           <a href={`#${slug}`} key={`link-${slug}`}>
@@ -47,10 +49,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h3: ({ children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
         <h3
-          id={slugify(children)}
+          id={slug}
           className="mt-6 mb-3 font-mono text-2xl font-semibold capitalize"
         >
           <a href={`#${slug}`} key={`link-${slug}`}>
@@ -60,9 +63,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h4: ({ children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
-        <h4 id={slugify(children)} className="mt-4 mb-2 text-xl font-semibold">
+        <h4 id={slug} className="mt-4 mb-2 text-xl font-semibold">
           <a href={`#${slug}`} key={`link-${slug}`}>
             {children}
           </a>
@@ -70,9 +74,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h5: ({ children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
-        <h5 id={slugify(children)} className="mt-4 mb-2 text-lg font-semibold">
+        <h5 id={slug} className="mt-4 mb-2 text-lg font-semibold">
           <a href={`#${slug}`} key={`link-${slug}`}>
             {children}
           </a>
@@ -80,9 +85,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h6: ({ children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
-        <h6 id={slugify(children)} className="mt-4 mb-2 text-lg font-medium">
+        <h6 id={slug} className="mt-4 mb-2 text-lg font-medium">
           <a href={`#${slug}`} key={`link-${slug}`}>
             {children}
           </a>
@@ -128,27 +134,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function slugify(str: any): string {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    str
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .toString()
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .toLowerCase()
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .trim() // Remove whitespace from both ends of a string
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .replace(/\s+/g, '-') // Replace spaces with -
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .replace(/&/g, '-and-') // Replace & with 'and'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      .replace(/--+/g, '-')
-  ); // Replace multiple - with single -
+function slugify(str: string): string {
+  return str
+    .toString()
+    .toLowerCase()
+    .trim() // Remove whitespace from both ends of a string
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
+    .replace(/--+/g, '-'); // Replace multiple - with single -
 }
 
 function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
