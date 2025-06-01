@@ -46,11 +46,7 @@ export default async function BlogIndexPage({
                   <span>By {post.author}</span>
                   <span>•</span>
                   <time dateTime={post.date}>
-                    {new Date(post.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                    {new Date(post.date).toLocaleDateString()}
                   </time>
                 </div>
                 <div className="flex items-center justify-between">

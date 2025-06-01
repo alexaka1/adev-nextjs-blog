@@ -8,7 +8,7 @@ import NavLink from '@/app/components/NavLink';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const navLinks = [
-  // { href: '/blog', label: 'Blog' },
+  { href: '/blog', label: 'Blog' },
   // { href: '/projects', label: 'Projects' },
   { href: '/', label: 'About me' },
 ];
