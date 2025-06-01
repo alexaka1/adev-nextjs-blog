@@ -1,14 +1,15 @@
 import Link from 'next/link';
-import { getPaginatedBlogPosts } from '@/lib/blog';
 import { type Metadata } from 'next';
 import { Pagination } from '@/components/pagination';
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { getPaginatedBlogPosts } from '@/content/utils';
 
 interface BlogIndexPageProps {
   searchParams: Promise<{
@@ -33,7 +34,7 @@ export default async function BlogIndexPage({
     posts,
     totalPages,
     currentPage: validatedPage,
-  } = await getPaginatedBlogPosts(currentPage, pageSize);
+  } = getPaginatedBlogPosts(currentPage, pageSize);
 
   return (
     <article className="container mx-auto py-8">
@@ -48,18 +49,22 @@ export default async function BlogIndexPage({
                 <Card>
                   <CardHeader>
                     <CardTitle>
-                      <h2>{post.title}</h2>
+                      <h2>{post.metadata.title}</h2>
                     </CardTitle>
                     <CardDescription className={`flex items-center space-x-2`}>
-                      <span>By {post.author}</span>
+                      <span>By {post.metadata.author}</span>
                       <span className={`sr-only`}>on</span>
                       <span aria-hidden={true}>•</span>
-                      <time dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString()}
+                      <time dateTime={post.metadata.publishedAt}>
+                        {new Date(
+                          post.metadata.publishedAt,
+                        ).toLocaleDateString()}
                       </time>
                     </CardDescription>
                   </CardHeader>
-                  {/*<CardContent className="mb-4 flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400"></CardContent>*/}
+                  <CardContent className="mb-4 flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+                    {post.metadata.summary}
+                  </CardContent>
                   <CardFooter className="flex items-center justify-between">
                     <span className="text-main hover:underline">
                       Read more →

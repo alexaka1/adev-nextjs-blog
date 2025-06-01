@@ -25,22 +25,29 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
       // Extract frontmatter using regex
-      const titleMatch = /export const title = ["'](.+)["'];/.exec(fileContent);
-      const dateMatch = /export const date = ["'](.+)["'];/.exec(fileContent);
-      const authorMatch = /export const author = ["'](.+)["'];/.exec(
-        fileContent,
-      );
+      // const titleMatch = /export const title = ["'](.+)["'];/.exec(fileContent);
+      // const dateMatch = /export const date = ["'](.+)["'];/.exec(fileContent);
+      // const authorMatch = /export const author = ["'](.+)["'];/.exec(
+      //   fileContent,
+      // );
 
-      if (!titleMatch || !dateMatch) return null;
+      // if (!titleMatch || !dateMatch) return null;
 
       // Extract slug from filename (remove .mdx extension)
       const slug = file.replace(/\.mdx$/, '');
 
+      // return {
+      //   slug,
+      //   title: titleMatch[1],
+      //   date: dateMatch[1],
+      //   author: authorMatch ? authorMatch[1] : 'Unknown',
+      //   content: fileContent,
+      // };
       return {
         slug,
-        title: titleMatch[1],
-        date: dateMatch[1],
-        author: authorMatch ? authorMatch[1] : 'Unknown',
+        title: 'title',
+        date: '2000-01-01',
+        author: 'author',
         content: fileContent,
       };
     }),
