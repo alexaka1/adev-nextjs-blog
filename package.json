@@ -6,8 +6,8 @@
   "scripts": {
     "check-site-meta": "pnpx check-site-meta --no-analytics http://localhost:3000",
     "doctor:lockfile": "pnpm i --fix-lockfile",
-    "dev": "next dev --turbopack",
-    "dev:no-turbo": "next dev",
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbopack",
     "dev:sw": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
@@ -43,6 +43,7 @@
     "rehype-starry-night": "2.2.0",
     "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.1",
+    "remark-mdx-frontmatter": "5.1.0",
     "tailwind-merge": "3.3.0",
     "zod": "3.25.46"
   },

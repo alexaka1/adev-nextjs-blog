@@ -3,6 +3,7 @@ import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import rehypeStarryNight from 'rehype-starry-night';
 
 const nextConfig: NextConfig = {
@@ -14,8 +15,9 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX({
   // Add markdown plugins here, as desired
   options: {
-    remarkPlugins: [remarkGfm, remarkFrontmatter],
+    remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
     rehypePlugins: [rehypeStarryNight],
+    jsx: true,
   },
 });
 
