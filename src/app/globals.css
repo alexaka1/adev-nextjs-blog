@@ -87,3 +87,17 @@
     animation: glitch-3 3.5s infinite linear alternate-reverse;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+[id] {
+  scroll-margin-top: 60px;
+}
