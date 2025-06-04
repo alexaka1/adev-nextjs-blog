@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import '../../node_modules/@wooorm/starry-night/style/both.css';
 import Header from '@/app/components/header';
 import Footer from '@/app/components/footer';
 import { ThemeProvider } from '@/app/components/theme-provider';
+import { APP_DEFAULT_TITLE, APP_TITLE_TEMPLATE } from '@/app/manifest';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,7 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'alexaka1.dev',
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
   description: 'Personal website of Alex Martossy',
 };
 
