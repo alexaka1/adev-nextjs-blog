@@ -1,7 +1,8 @@
 import type { MDXComponents } from 'mdx/types';
 import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
-import { type AnchorHTMLAttributes, type ReactNode } from 'react';
+import { HashIcon } from 'lucide-react';
+import type { AnchorHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 import {
   Table,
   TableBody,
@@ -13,6 +14,23 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+function HeadingLink({
+  children,
+  slug,
+}: Readonly<PropsWithChildren & { slug: string }>) {
+  return (
+    <>
+      <HashIcon
+        className={`invisible absolute top-1/2 -left-4 size-6 -translate-1/2 group-hover/title:visible`}
+        aria-hidden={true}
+      />
+      <a href={`#${slug}`} key={`link-${slug}`}>
+        {children}
+      </a>
+    </>
+  );
+}
+
 export const customComponents = {
   h1: ({ children }: { children: ReactNode }) => {
     // @ts-expect-error I don't know what types I should define here, but this works at runtime
@@ -20,11 +38,9 @@ export const customComponents = {
     return (
       <h1
         id={slug}
-        className="mt-8 mb-4 font-mono text-4xl font-extrabold tracking-tight capitalize"
+        className="group/title relative mt-8 mb-4 font-mono text-4xl font-extrabold tracking-tight capitalize"
       >
-        <a href={`#${slug}`} key={`link-${slug}`}>
-          {children}
-        </a>
+        <HeadingLink slug={slug}>{children}</HeadingLink>
       </h1>
     );
   },
@@ -40,11 +56,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <h2
           id={slug}
-          className="mt-8 mb-4 font-mono text-3xl font-bold tracking-tight capitalize"
+          className="group/title relative mt-8 mb-4 font-mono text-3xl font-bold tracking-tight capitalize"
         >
-          <a href={`#${slug}`} key={`link-${slug}`}>
-            {children}
-          </a>
+          <HeadingLink slug={slug}>{children}</HeadingLink>
         </h2>
       );
     },
@@ -54,11 +68,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <h3
           id={slug}
-          className="mt-6 mb-3 font-mono text-2xl font-semibold capitalize"
+          className="group/title relative mt-6 mb-3 font-mono text-2xl font-semibold capitalize"
         >
-          <a href={`#${slug}`} key={`link-${slug}`}>
-            {children}
-          </a>
+          <HeadingLink slug={slug}>{children}</HeadingLink>
         </h3>
       );
     },
@@ -66,10 +78,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
-        <h4 id={slug} className="mt-4 mb-2 text-xl font-semibold">
-          <a href={`#${slug}`} key={`link-${slug}`}>
-            {children}
-          </a>
+        <h4
+          id={slug}
+          className="group/title relative mt-4 mb-2 text-xl font-semibold"
+        >
+          <HeadingLink slug={slug}>{children}</HeadingLink>
         </h4>
       );
     },
@@ -77,10 +90,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
-        <h5 id={slug} className="mt-4 mb-2 text-lg font-semibold">
-          <a href={`#${slug}`} key={`link-${slug}`}>
-            {children}
-          </a>
+        <h5
+          id={slug}
+          className="group/title relative mt-4 mb-2 text-lg font-semibold"
+        >
+          <HeadingLink slug={slug}>{children}</HeadingLink>
         </h5>
       );
     },
@@ -88,10 +102,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const slug = slugify(children);
       return (
-        <h6 id={slug} className="mt-4 mb-2 text-lg font-medium">
-          <a href={`#${slug}`} key={`link-${slug}`}>
-            {children}
-          </a>
+        <h6
+          id={slug}
+          className="group/title relative mt-4 mb-2 text-lg font-medium"
+        >
+          <HeadingLink slug={slug}>{children}</HeadingLink>
         </h6>
       );
     },
