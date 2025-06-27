@@ -63,7 +63,7 @@
     "tailwindcss": "4.1.10",
     "tw-animate-css": "1.3.4",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.34.1"
+    "typescript-eslint": "8.35.0"
   },
   "packageManager": "pnpm@10.12.2+sha512.a32540185b964ee30bb4e979e405adc6af59226b438ee4cc19f9e8773667a66d302f5bfee60a39d3cac69e35e4b96e708a71dd002b7e9359c4112a1722ac323f"
 }
