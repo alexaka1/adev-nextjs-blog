@@ -91,8 +91,8 @@ importers:
         specifier: 2.0.13
         version: 2.0.13
       '@types/node':
-        specifier: 22.16.0
-        version: 22.16.0
+        specifier: 22.16.1
+        version: 22.16.1
       '@types/react':
         specifier: 19.1.8
         version: 19.1.8
@@ -1460,8 +1460,8 @@ packages:
   '@types/mysql@2.15.26':
     resolution: {integrity: sha512-DSLCOXhkvfS5WNNPbfn2KdICAmk8lLc+/PNvnPnF7gOdMZCxopXduqv0OQ13y/yA/zXTSikZZqVgybUxOEg6YQ==}
 
-  '@types/node@22.16.0':
-    resolution: {integrity: sha512-B2egV9wALML1JCpv3VQoQ+yesQKAmNMBIAY7OteVrikcOcAkWm+dGL6qpeCktPjAv6N1JLnhbNiqS35UpFyBsQ==}
+  '@types/node@22.16.1':
+    resolution: {integrity: sha512-oaNE4MzsA6uO7HcsjUvqzz19lYIRsV6I1Dc6iOvgwYYDiOeF7/9b2E/PE0UW2ccwpgWPVUedjltYXQXVKFd4EA==}
 
   '@types/pg-pool@2.0.6':
     resolution: {integrity: sha512-TaAUE5rq2VQYxab5Ts7WZhKNmuN78Q6PiFonTDdpbx8a1H0M1vhy3rhiMjl+e2iHmogyMw7jZF4FrE6eJUy5HQ==}
@@ -5232,7 +5232,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.16.0
+      '@types/node': 22.16.1
 
   '@types/debug@4.1.12':
     dependencies:
@@ -5274,9 +5274,9 @@ snapshots:
 
   '@types/mysql@2.15.26':
     dependencies:
-      '@types/node': 22.16.0
+      '@types/node': 22.16.1
 
-  '@types/node@22.16.0':
+  '@types/node@22.16.1':
     dependencies:
       undici-types: 6.21.0
 
@@ -5286,7 +5286,7 @@ snapshots:
 
   '@types/pg@8.6.1':
     dependencies:
-      '@types/node': 22.16.0
+      '@types/node': 22.16.1
       pg-protocol: 1.9.5
       pg-types: 2.2.0
 
@@ -5302,7 +5302,7 @@ snapshots:
 
   '@types/tedious@4.0.14':
     dependencies:
-      '@types/node': 22.16.0
+      '@types/node': 22.16.1
 
   '@types/unist@2.0.11': {}
 
@@ -6777,7 +6777,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.16.0
+      '@types/node': 22.16.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
