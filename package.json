@@ -31,7 +31,7 @@
     "@radix-ui/react-label": "2.1.7",
     "@radix-ui/react-navigation-menu": "1.2.13",
     "@radix-ui/react-slot": "1.2.3",
-    "@sentry/nextjs": "9.35.0",
+    "@sentry/nextjs": "9.36.0",
     "@t3-oss/env-nextjs": "0.13.8",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
