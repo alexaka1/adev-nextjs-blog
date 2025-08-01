@@ -18,6 +18,16 @@
       matchDatasources: ["docker"],
       addLabels: ["docker"],
     },
+    {
+      description: "Auto-merge patch updates",
+      matchUpdateTypes: ["patch"],
+      automerge: true,
+    },
+    {
+      description: "Auto-merge digest updates",
+      matchUpdateTypes: ["digest"],
+      automerge: true,
+    },
   ],
   customManagers: [
     {
