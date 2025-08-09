@@ -150,14 +150,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 }
 
 function slugify(str: string): string {
-  return str
-    .toString()
-    .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
-    .replace(/--+/g, '-'); // Replace multiple - with single -
+  return (
+    str
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
+      .toString()
+      .toLowerCase()
+      .trim() // Remove whitespace from both ends of a string
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(/&/g, '-and-') // Replace & with 'and'
+      .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
+      .replace(/--+/g, '-')
+  ); // Replace multiple - with single -
 }
 
 function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
