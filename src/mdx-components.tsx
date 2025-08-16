@@ -2,7 +2,12 @@ import type { MDXComponents } from 'mdx/types';
 import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
 import { HashIcon } from 'lucide-react';
-import type { AnchorHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
+import React, {
+  isValidElement,
+  type AnchorHTMLAttributes,
+  type PropsWithChildren,
+  type ReactNode,
+} from 'react';
 import {
   Table,
   TableBody,
@@ -31,9 +36,34 @@ function HeadingLink({
   );
 }
 
+/**
+ * Safely convert a ReactNode to a string.
+ * Handles strings, numbers, booleans, arrays, null/undefined, and React elements by
+ * recursively extracting their children text.
+ */
+function reactNodeToString(node: ReactNode): string {
+  if (node === null || node === undefined) return '';
+  if (
+    typeof node === 'string' ||
+    typeof node === 'number' ||
+    typeof node === 'boolean'
+  ) {
+    return String(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map(reactNodeToString).join('');
+  }
+  if (isValidElement(node)) {
+    // If it's a React element, try to extract its children
+    const element = node as React.ReactElement<{ children?: ReactNode }>;
+    return reactNodeToString(element.props.children);
+  }
+  // Fallback to empty string for other types
+  return '';
+}
+
 export const customComponents = {
   h1: ({ children }: { children: ReactNode }) => {
-    // @ts-expect-error I don't know what types I should define here, but this works at runtime
     const slug = slugify(children);
     return (
       <h1
@@ -50,8 +80,7 @@ export const customComponents = {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: customComponents.h1,
-    h2: ({ children }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    h2: ({ children }: { children: ReactNode }) => {
       const slug = slugify(children);
       return (
         <h2
@@ -62,8 +91,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </h2>
       );
     },
-    h3: ({ children }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    h3: ({ children }: { children: ReactNode }) => {
       const slug = slugify(children);
       return (
         <h3
@@ -74,8 +102,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </h3>
       );
     },
-    h4: ({ children }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    h4: ({ children }: { children: ReactNode }) => {
       const slug = slugify(children);
       return (
         <h4
@@ -86,8 +113,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </h4>
       );
     },
-    h5: ({ children }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    h5: ({ children }: { children: ReactNode }) => {
       const slug = slugify(children);
       return (
         <h5
@@ -98,8 +124,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </h5>
       );
     },
-    h6: ({ children }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    h6: ({ children }: { children: ReactNode }) => {
       const slug = slugify(children);
       return (
         <h6
@@ -149,18 +174,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   };
 }
 
-function slugify(str: string): string {
-  return (
-    str
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
-      .toString()
-      .toLowerCase()
-      .trim() // Remove whitespace from both ends of a string
-      .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(/&/g, '-and-') // Replace & with 'and'
-      .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
-      .replace(/--+/g, '-')
-  ); // Replace multiple - with single -
+function slugify(node: ReactNode): string {
+  const str = reactNodeToString(node);
+  return str
+    .toLowerCase()
+    .trim() // Remove whitespace from both ends of a string
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
+    .replace(/--+/g, '-'); // Replace multiple - with single -
 }
 
 function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
