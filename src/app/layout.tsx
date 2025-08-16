@@ -6,6 +6,7 @@ import Header from '@/app/components/header';
 import Footer from '@/app/components/footer';
 import { ThemeProvider } from '@/app/components/theme-provider';
 import { APP_DEFAULT_TITLE, APP_TITLE_TEMPLATE } from '@/app/manifest';
+import { type ReactNode } from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
