@@ -4,6 +4,7 @@ import { getBlogPosts } from '@/content/utils';
 import { baseUrl } from '@/app/sitemap';
 import { customComponents } from '@/mdx-components';
 import ClientDate from '@/app/components/client-date';
+import { ComponentType } from 'react';
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -70,8 +71,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   // Import the MDX content dynamically
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const MDXContent = await import(`@/content/blog/${slug}.mdx`);
+  const { default: MDXContent } = (await import(
+    `@/content/blog/${slug}.mdx`
+  )) as {
+    default: ComponentType;
+  };
+
   return (
     <div className="container mx-auto py-8">
       <article className="prose prose-lg dark:prose-invert mx-auto">
@@ -93,7 +98,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </span>
           </span>
         </p>
-        <MDXContent.default />
+        <MDXContent />
       </article>
     </div>
   );
