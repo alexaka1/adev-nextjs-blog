@@ -24,9 +24,9 @@ function HeadingLink({
         className={`invisible absolute top-1/2 -left-4 size-6 -translate-1/2 group-hover/title:visible`}
         aria-hidden={true}
       />
-      <a href={`#${slug}`} key={`link-${slug}`}>
+      <Link href={`#${slug}`} key={`link-${slug}`}>
         {children}
-      </a>
+      </Link>
     </>
   );
 }
@@ -180,7 +180,8 @@ function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
 
   if (href.startsWith('#')) {
     return (
-      <a
+      <Link
+        href={href}
         className={`font-mono text-main underline transition-colors hover:text-main/80`}
         {...props}
       />
@@ -188,7 +189,8 @@ function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
   }
 
   return (
-    <a
+    <Link
+      href={href}
       className={`font-mono text-main underline transition-colors hover:text-main/80`}
       target="_blank"
       rel="noopener noreferrer"

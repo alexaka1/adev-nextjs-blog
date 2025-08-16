@@ -1,5 +1,6 @@
 import GitHub from '@/app/components/icons/github';
 import X from '@/app/components/icons/x';
+import Link from 'next/link';
 // import NavLink from '@/app/components/NavLink';
 //
 // const navLinks: Record<string, string>[] = [
@@ -55,14 +56,14 @@ export default function Footer() {
             {socialLinks.map((link) => {
               const Icon = link.icon;
               return (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
                   className="transition-colors hover:fill-main"
                   aria-label={link.label}
                 >
                   <Icon className={`size-4 dark:fill-white`} />
-                </a>
+                </Link>
               );
             })}
           </div>
