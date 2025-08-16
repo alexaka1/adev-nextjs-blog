@@ -6,6 +6,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
+import oxlint from 'eslint-plugin-oxlint';
 // import pluginQuery from '@tanstack/eslint-plugin-query';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -72,6 +73,7 @@ const eslintConfig = ts.config(
       // ],
     },
   },
+  ...oxlint.configs['flat/recommended'], // oxlint should be the last one
 );
 
 export default eslintConfig;
