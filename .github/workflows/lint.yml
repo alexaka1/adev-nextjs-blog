@@ -75,4 +75,4 @@ jobs:
         if: steps.lint.outputs.exit_code != '0' && !cancelled()
         run: exit ${{ steps.lint.outputs.exit_code }}
       - name: Build
-        run: next build --no-lint
+        run: pnpm run build --no-lint
