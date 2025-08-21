@@ -71,7 +71,8 @@ jobs:
                 await github.rest.issues.createComment({ owner, repo, issue_number, body });
               }
             }
-
       - name: Fail if lint failed
-        if: steps.lint.outputs.exit_code != '0'
+        if: steps.lint.outputs.exit_code != '0' && !cancelled()
         run: exit ${{ steps.lint.outputs.exit_code }}
+      - name: Build
+        run: next build --no-lint

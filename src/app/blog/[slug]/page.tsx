@@ -4,7 +4,7 @@ import { getBlogPosts } from '@/content/utils';
 import { baseUrl } from '@/app/sitemap';
 import { customComponents } from '@/mdx-components';
 import ClientDate from '@/app/components/client-date';
-import { type ComponentType } from 'react';
+import { ComponentType } from 'react';
 
 type BlogPostPageProps = {
   params: Promise<{
