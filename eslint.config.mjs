@@ -21,6 +21,15 @@ const eslintConfig = ts.config(
   ...compat.extends(
     'next/core-web-vitals' /*, 'next/typescript'*/ /*added by ts below*/,
   ),
+  {
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+    ],
+  },
   ...ts.configs.strictTypeChecked,
   ...ts.configs.stylisticTypeChecked,
   eslintConfigPrettier,
