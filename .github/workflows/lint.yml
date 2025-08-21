@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          pnpm exec lint 2>&1 | tee lint-output.txt
+          pnpm run lint 2>&1 | tee lint-output.txt
           echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
         continue-on-error: true
       - name: Comment lint results on PR
