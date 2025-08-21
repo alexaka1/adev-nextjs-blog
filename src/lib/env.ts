@@ -11,4 +11,5 @@ export const env = createEnv({
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
   },
   extends: [vercel()],
+  skipValidation: process.env.SKIP_T3_ENV_VALIDATION === 'true',
 });
