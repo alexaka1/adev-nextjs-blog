@@ -1,0 +1,64 @@
+name: Lint
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+permissions: { }
+
+jobs:
+  lint:
+    name: Lint with pnpm and comment results
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - uses: oxc-project/oxlint-action@v2.0.1
+        with:
+          config: .oxlintrc.json
+      - name: Run lint and capture output
+        id: lint
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm exec lint 2>&1 | tee lint-output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+        continue-on-error: true
+      - name: Comment lint results on PR
+        if: ${{ !cancelled() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('lint-output.txt', 'utf8');
+            const exitCode = '${{ steps.lint.outputs.exit_code }}';
+            const title = exitCode === '0' ? '✅ Lint passed' : '❌ Lint found issues';
+            const body = `### ${title}\n\n<details><summary>Show output</summary>\n\n\`\`\`\n${output.slice(-60000)}\n\`\`\`\n\n</details>`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            if (!issue_number) {
+              core.info('No pull request context detected, skipping comment.');
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+      - name: Fail if lint failed
+        if: steps.lint.outputs.exit_code != '0'
+        run: exit ${{ steps.lint.outputs.exit_code }}
