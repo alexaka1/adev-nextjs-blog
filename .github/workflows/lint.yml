@@ -5,6 +5,9 @@ on:
     types: [ opened, synchronize, reopened ]
 
 permissions: { }
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
+  CI: 'true'
 
 jobs:
   lint:
