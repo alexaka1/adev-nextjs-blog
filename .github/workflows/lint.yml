@@ -23,21 +23,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
         with:
           run_install: false
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .node-version
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - uses: oxc-project/oxlint-action@v2.0.1
+      - uses: oxc-project/oxlint-action@d77e44ee001f4d94c4191fdb03af8be0c98f3d35 # v2.0.1
         with:
           config: .oxlintrc.json
       - name: Run lint and capture output
@@ -50,7 +50,7 @@ jobs:
         continue-on-error: true
       - name: Comment lint results on PR
         if: ${{ !cancelled() }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         with:
           script: |
             const fs = require('fs');
