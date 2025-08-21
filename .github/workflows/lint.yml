@@ -8,7 +8,7 @@ permissions: { }
 
 jobs:
   lint:
-    name: Lint with pnpm and comment results
+    name: Lint app
     runs-on: ubuntu-latest
     permissions:
       contents: read
