@@ -17,7 +17,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = defineConfig(
+const eslintConfig = defineConfig([
   js.configs.recommended,
   ...compat.extends(
     'next/core-web-vitals' /*, 'next/typescript'*/ /*added by ts below*/,
@@ -84,6 +84,6 @@ const eslintConfig = defineConfig(
     },
   },
   ...oxlint.buildFromOxlintConfigFile('./.oxlintrc.json'), // oxlint should be the last one
-);
+]);
 
 export default eslintConfig;
