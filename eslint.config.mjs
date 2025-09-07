@@ -8,6 +8,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import oxlint from 'eslint-plugin-oxlint';
 // import pluginQuery from '@tanstack/eslint-plugin-query';
+import { defineConfig } from 'eslint/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,7 +17,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = ts.config(
+const eslintConfig = defineConfig(
   js.configs.recommended,
   ...compat.extends(
     'next/core-web-vitals' /*, 'next/typescript'*/ /*added by ts below*/,
