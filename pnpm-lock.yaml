@@ -109,8 +109,8 @@ importers:
         specifier: 10.1.8
         version: 10.1.8(eslint@9.37.0(jiti@2.6.1))
       eslint-plugin-oxlint:
-        specifier: 1.21.0
-        version: 1.21.0
+        specifier: 1.22.0
+        version: 1.22.0
       oxlint:
         specifier: 1.22.0
         version: 1.22.0
@@ -2322,8 +2322,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-oxlint@1.21.0:
-    resolution: {integrity: sha512-0HSy3c6SH7EoKVFMBFsEM+BmYFAUkOp6GDAPewUOaBOrldLWBnXUpBpduuQobh4wyCaVD4glbVue1ne6igzv4A==}
+  eslint-plugin-oxlint@1.22.0:
+    resolution: {integrity: sha512-EOzcSweCPXfy2ncWriSHlA5omZhXrnY60ESOLRxarOQxmOfZnwHciFsw6IRG2K6X1MCimRK9ak5uuEi1DElZJQ==}
 
   eslint-plugin-react-hooks@5.2.0:
     resolution: {integrity: sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==}
@@ -6450,7 +6450,7 @@ snapshots:
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
 
-  eslint-plugin-oxlint@1.21.0:
+  eslint-plugin-oxlint@1.22.0:
     dependencies:
       jsonc-parser: 3.3.1
 
