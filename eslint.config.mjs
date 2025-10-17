@@ -83,7 +83,7 @@ const eslintConfig = defineConfig([
       // ],
     },
   },
-  ...oxlint.buildFromOxlintConfigFile('./.oxlintrc.json'), // oxlint should be the last one
+  // ...oxlint.buildFromOxlintConfigFile('./.oxlintrc.json'), // oxlint should be the last one
 ]);
 
 export default eslintConfig;
