@@ -2,33 +2,15 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
     "config:best-practices",
-    "security:openssf-scorecard",
+    "github>alexaka1/renovate-config",
+    "github>alexaka1/renovate-config:monorepos",
+    "github>alexaka1/renovate-config//opinionated/schedules",
+    "github>alexaka1/renovate-config//opinionated/labels",
     ":automergeRequireAllStatusChecks",
     ":rebaseStalePrs",
     ":pinDependencies",
     "security:minimumReleaseAgeNpm",
     ":automergePatch",
     ":automergeDigest",
-  ],
-  labels: ["dependencies"],
-  packageRules: [
-    {
-      matchDatasources: ["npm", "node-version"],
-      addLabels: ["javascript"],
-    },
-    {
-      matchDatasources: ["docker"],
-      addLabels: ["docker"],
-    },
-  ],
-  customManagers: [
-    {
-      customType: "regex",
-      description: "Update pnpm in devcontainer",
-      managerFilePatterns: ["/(^|/|\\.)devcontainer.json$/"],
-      matchStrings: [
-        '# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s+"(?:.*)": "(?<currentValue>.+?)"\\s',
-      ],
-    },
-  ],
+  ]
 }
