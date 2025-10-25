@@ -9,7 +9,7 @@
     "dev": "next dev --webpack",
     "dev:turbo": "next dev",
     "dev:sw": "next dev --experimental-https",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "pnpm exec oxlint && eslint .",
     "lint:fix": "pnpm exec oxlint --fix && eslint --fix .",
