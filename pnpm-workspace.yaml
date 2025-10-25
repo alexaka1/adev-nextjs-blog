@@ -1,8 +1,7 @@
 onlyBuiltDependencies:
   - '@sentry/cli'
-  - '@tailwindcss/oxide'
-  - sharp
-  - unrs-resolver
+  - 'sharp'
+  - 'unrs-resolver'
 packageManagerStrictVersion: true
 publicHoistPattern:
   - '*eslint*'
@@ -10,4 +9,7 @@ publicHoistPattern:
   - '@t3-oss/*'
   - '@sentry/core'
   - '@wooorm/starry-night'
+  # opentelemetry turbopack fix
+  - 'import-in-the-middle'
+  - 'require-in-the-middle'
 savePrefix: ''

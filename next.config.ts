@@ -1,10 +1,6 @@
 import { withSentryConfig } from '@sentry/nextjs';
 import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
-import remarkGfm from 'remark-gfm';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
-import rehypeStarryNight from 'rehype-starry-night';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -16,11 +12,11 @@ const withMDX = createMDX({
   // Add markdown plugins here, as desired
   options: {
     remarkPlugins: [
-      remarkGfm,
-      remarkFrontmatter,
-      [remarkMdxFrontmatter, { name: 'matter' }],
+      'remark-gfm',
+      'remark-frontmatter',
+      ['remark-mdx-frontmatter', { name: 'matter' }],
     ],
-    rehypePlugins: [rehypeStarryNight],
+    rehypePlugins: ['rehype-starry-night'],
     jsx: true,
   },
 });
