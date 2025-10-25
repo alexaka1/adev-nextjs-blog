@@ -1,25 +1,11 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from '@/app/components/NavLink';
 
 export default function NotFound() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    return () => {
-      setMounted(false);
-    };
-  }, []);
-
   return (
     <div className="flex min-h-[calc(100vh-200px)] flex-col items-center justify-center px-4 py-16 text-center">
-      <div
-        className={`transition-opacity duration-1000 ${mounted ? 'opacity-100' : 'opacity-0'}`}
-      >
+      <div className={`opacity-100 transition-opacity duration-1000`}>
         <h1 className="relative mb-6 text-9xl font-extrabold tracking-tight">
           <span
             className="animate-glitch-1 absolute top-0 left-0 w-full text-main-foreground"
