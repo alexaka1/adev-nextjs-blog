@@ -1,24 +1,15 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import React, {
-  type ComponentProps,
-  type PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
+import React, { type ComponentProps, type PropsWithChildren } from 'react';
 import Link from 'next/link';
 
 type CustomLinkProps = ComponentProps<typeof Link> & PropsWithChildren;
 
 export default function NavLink({ href, children, ...props }: CustomLinkProps) {
   const path = usePathname();
-  const [ariaCurrent, setAriaCurrent] =
-    useState<React.AriaAttributes['aria-current']>(undefined);
-
-  useEffect(() => {
-    setAriaCurrent(href === path ? 'page' : undefined);
-  }, [href, path]);
+  const ariaCurrent: React.AriaAttributes['aria-current'] =
+    href === path ? 'page' : undefined;
   return (
     <Link href={href} aria-current={ariaCurrent} {...props}>
       {children}
