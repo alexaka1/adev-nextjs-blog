@@ -2,34 +2,24 @@
 
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import oxlint from 'eslint-plugin-oxlint';
 // import pluginQuery from '@tanstack/eslint-plugin-query';
-import { defineConfig } from 'eslint/config';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
 
 const eslintConfig = defineConfig([
   js.configs.recommended,
-  ...compat.extends(
-    'next/core-web-vitals' /*, 'next/typescript'*/ /*added by ts below*/,
-  ),
+  ...nextVitals,
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+  ]),
   {
-    ignores: [
-      'node_modules/**',
-      '.next/**',
-      'out/**',
-      'build/**',
-      'next-env.d.ts',
-    ],
+    ignores: ['node_modules/**'],
   },
   ...ts.configs.strictTypeChecked,
   ...ts.configs.stylisticTypeChecked,
