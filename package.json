@@ -6,10 +6,10 @@
   "scripts": {
     "check-site-meta": "pnpx check-site-meta --no-analytics http://localhost:3000",
     "doctor:lockfile": "pnpm i --fix-lockfile",
-    "dev": "next dev",
-    "dev:turbo": "next dev --turbopack",
+    "dev": "next dev --webpack",
+    "dev:turbo": "next dev",
     "dev:sw": "next dev --experimental-https",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "pnpm exec oxlint && eslint .",
     "lint:fix": "pnpm exec oxlint --fix && eslint --fix .",
