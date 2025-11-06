@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - uses: oxc-project/oxlint-action@5cfbcee004d3bb2452df05659caa0a76aa97c7bc # v2.0.2
+      - uses: oxc-project/oxlint-action@92eec2c4d5dbbb882c926478438aa4b7f20ffe2d # v3.0.0
         with:
           config: .oxlintrc.json
       - name: Run lint and capture output
