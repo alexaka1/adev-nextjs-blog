@@ -6,12 +6,10 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import oxlint from 'eslint-plugin-oxlint';
 // import pluginQuery from '@tanstack/eslint-plugin-query';
 import { defineConfig, globalIgnores } from 'eslint/config';
-// @ts-expect-error I have no idea what the problem here is
 import nextVitals from 'eslint-config-next/core-web-vitals';
 
 const eslintConfig = defineConfig([
   js.configs.recommended,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   ...nextVitals,
   globalIgnores([
     // Default ignores of eslint-config-next:
