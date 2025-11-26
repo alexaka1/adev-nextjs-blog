@@ -10,7 +10,6 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 
 const eslintConfig = defineConfig([
   js.configs.recommended,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   ...nextVitals,
   globalIgnores([
     // Default ignores of eslint-config-next:
