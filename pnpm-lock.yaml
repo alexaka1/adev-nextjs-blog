@@ -109,11 +109,11 @@ importers:
         specifier: 10.1.8
         version: 10.1.8(eslint@9.39.1(jiti@2.6.1))
       eslint-plugin-oxlint:
-        specifier: 1.23.0
-        version: 1.23.0
+        specifier: 1.32.0
+        version: 1.32.0
       oxlint:
-        specifier: 1.23.0
-        version: 1.23.0
+        specifier: 1.32.0
+        version: 1.32.0
       prettier:
         specifier: 3.7.4
         version: 3.7.4
@@ -745,43 +745,43 @@ packages:
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
 
-  '@oxlint/darwin-arm64@1.23.0':
-    resolution: {integrity: sha512-sbxoftgEMKmZQO7O4wHR9Rs7MfiHa2UH2x4QJDoc4LXqSCsI4lUIJbFQ05vX+zOUbt7CQMPdxEzExd4DqeKY2w==}
+  '@oxlint/darwin-arm64@1.32.0':
+    resolution: {integrity: sha512-yrqPmZYu5Qb+49h0P5EXVIq8VxYkDDM6ZQrWzlh16+UGFcD8HOXs4oF3g9RyfaoAbShLCXooSQsM/Ifwx8E/eQ==}
     cpu: [arm64]
     os: [darwin]
 
-  '@oxlint/darwin-x64@1.23.0':
-    resolution: {integrity: sha512-PjByWr1TlwHQiOqEc8CPyXCT4wnujSK3n9l1m4un0Eh0uLJEDG5WM9tyDWOGuakC0Ika9/SMp0HDRg3ySchRRA==}
+  '@oxlint/darwin-x64@1.32.0':
+    resolution: {integrity: sha512-pQRZrJG/2nAKc3IuocFbaFFbTDlQsjz2WfivRsMn0hw65EEsSuM84WMFMiAfLpTGyTICeUtHZLHlrM5lzVr36A==}
     cpu: [x64]
     os: [darwin]
 
-  '@oxlint/linux-arm64-gnu@1.23.0':
-    resolution: {integrity: sha512-sWlCwQ6xKeKC08qU3SfozqpRGCLJiO/onPYFJKEHbjzHkFp+OubOacFaT4ePcka28jCU1TvQ7Gi5BVQRncr0Xg==}
+  '@oxlint/linux-arm64-gnu@1.32.0':
+    resolution: {integrity: sha512-tyomSmU2DzwcTmbaWFmStHgVfRmJDDvqcIvcw4fRB1YlL2Qg/XaM4NJ0m2bdTap38gxD5FSxSgCo0DkQ8GTolg==}
     cpu: [arm64]
     os: [linux]
 
-  '@oxlint/linux-arm64-musl@1.23.0':
-    resolution: {integrity: sha512-MPkmSiezuVgjMbzDSkRhENdnb038JOI+OTpBrOho2crbCAuqSRvyFwkMRhncJGZskzo1yeKxrKXB8T83ofmSXw==}
+  '@oxlint/linux-arm64-musl@1.32.0':
+    resolution: {integrity: sha512-0W46dRMaf71OGE4+Rd+GHfS1uF/UODl5Mef6871pMhN7opPGfTI2fKJxh9VzRhXeSYXW/Z1EuCq9yCfmIJq+5Q==}
     cpu: [arm64]
     os: [linux]
 
-  '@oxlint/linux-x64-gnu@1.23.0':
-    resolution: {integrity: sha512-F6H9wmLfjBoNqtsgyg3P9abLnkVjNbCAnISKdRtDl7HvkMs4s/eU8np9+tSnqPeKOTBhkS+h/VSWgPGZTqIWQA==}
+  '@oxlint/linux-x64-gnu@1.32.0':
+    resolution: {integrity: sha512-5+6myVCBOMvM62rDB9T3CARXUvIwhGqte6E+HoKRwYaqsxGUZ4bh3pItSgSFwHjLGPrvADS11qJUkk39eQQBzQ==}
     cpu: [x64]
     os: [linux]
 
-  '@oxlint/linux-x64-musl@1.23.0':
-    resolution: {integrity: sha512-Xra0Cow35mAku8mbUbviPRalTU4Ct6MXQ1Eue8GmN4HFkjosrNa5qfy7QkJBqzjiI+JdnHxPXwackGn92/XOQw==}
+  '@oxlint/linux-x64-musl@1.32.0':
+    resolution: {integrity: sha512-qwQlwYYgVIC6ScjpUwiKKNyVdUlJckrfwPVpIjC9mvglIQeIjKuuyaDxUZWIOc/rEzeCV/tW6tcbehLkfEzqsw==}
     cpu: [x64]
     os: [linux]
 
-  '@oxlint/win32-arm64@1.23.0':
-    resolution: {integrity: sha512-FR+I+uGD3eFzTfBw87QRr+Y1jBYil3TqPM0wkSvuf3gOJTEXAfSkh9QHCgQqrseW3HDW7YJJ8ty1+sU31H/N4g==}
+  '@oxlint/win32-arm64@1.32.0':
+    resolution: {integrity: sha512-7qYZF9CiXGtdv8Z/fBkgB5idD2Zokht67I5DKWH0fZS/2R232sDqW2JpWVkXltk0+9yFvmvJ0ouJgQRl9M3S2g==}
     cpu: [arm64]
     os: [win32]
 
-  '@oxlint/win32-x64@1.23.0':
-    resolution: {integrity: sha512-/oX0b26YIC1OgS5B+G8Ux1Vs/PIjOP4CBRzsPpYr0T+RoboJ3ZuV32bztLRggJKQqIlozcqiRo9fl/UMOMp8kQ==}
+  '@oxlint/win32-x64@1.32.0':
+    resolution: {integrity: sha512-XW1xqCj34MEGJlHteqasTZ/LmBrwYIgluhNW0aP+XWkn90+stKAq3W/40dvJKbMK9F7o09LPCuMVtUW7FIUuiA==}
     cpu: [x64]
     os: [win32]
 
@@ -2278,8 +2278,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-oxlint@1.23.0:
-    resolution: {integrity: sha512-YT/ObCQMluSHVEqDJPwrVLERkUUQnmcRYYQbB7h6t2P4243WE3Z1UmUcPy1Q6vSVP/U7vw5affptlGV2RizDuw==}
+  eslint-plugin-oxlint@1.32.0:
+    resolution: {integrity: sha512-CodKgz/9q3euGbCYrXVRyFxHfnrxn9Q4EywqE4V/VYegry2pJ9/hPQ0OUDTRzbl3/pPbVndkrUUm5tK8NTSgeg==}
 
   eslint-plugin-react-hooks@7.0.1:
     resolution: {integrity: sha512-O0d0m04evaNzEPoSW+59Mezf8Qt0InfgGIBJnpC0h3NH/WjUAR7BIKUfysC6todmtiZ/A0oUVS8Gce0WhBrHsA==}
@@ -3154,6 +3154,7 @@ packages:
   next@16.0.9:
     resolution: {integrity: sha512-Xk5x/wEk6ADIAtQECLo1uyE5OagbQCiZ+gW4XEv24FjQ3O2PdSkvgsn22aaseSXC7xg84oONvQjFbSTX5YsMhQ==}
     engines: {node: '>=20.9.0'}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/security-update-2025-12-11 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -3228,12 +3229,12 @@ packages:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
     engines: {node: '>= 0.4'}
 
-  oxlint@1.23.0:
-    resolution: {integrity: sha512-cLVdSE7Bza8npm+PffU0oufs15+M5uSMbQn0k2fJCayWU0xqQ3dyA3w9tEk8lgNOk1j1VJEdYctz64Vik8VG1w==}
+  oxlint@1.32.0:
+    resolution: {integrity: sha512-HYDQCga7flsdyLMUIxTgSnEx5KBxpP9VINB8NgO+UjV80xBiTQXyVsvjtneMT3ZBLMbL0SlG/Dm03XQAsEshMA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
-      oxlint-tsgolint: '>=0.2.0'
+      oxlint-tsgolint: '>=0.8.1'
     peerDependenciesMeta:
       oxlint-tsgolint:
         optional: true
@@ -4697,28 +4698,28 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 2.2.0(@opentelemetry/api@1.9.0)
 
-  '@oxlint/darwin-arm64@1.23.0':
+  '@oxlint/darwin-arm64@1.32.0':
     optional: true
 
-  '@oxlint/darwin-x64@1.23.0':
+  '@oxlint/darwin-x64@1.32.0':
     optional: true
 
-  '@oxlint/linux-arm64-gnu@1.23.0':
+  '@oxlint/linux-arm64-gnu@1.32.0':
     optional: true
 
-  '@oxlint/linux-arm64-musl@1.23.0':
+  '@oxlint/linux-arm64-musl@1.32.0':
     optional: true
 
-  '@oxlint/linux-x64-gnu@1.23.0':
+  '@oxlint/linux-x64-gnu@1.32.0':
     optional: true
 
-  '@oxlint/linux-x64-musl@1.23.0':
+  '@oxlint/linux-x64-musl@1.32.0':
     optional: true
 
-  '@oxlint/win32-arm64@1.23.0':
+  '@oxlint/win32-arm64@1.32.0':
     optional: true
 
-  '@oxlint/win32-x64@1.23.0':
+  '@oxlint/win32-x64@1.32.0':
     optional: true
 
   '@pkgjs/parseargs@0.11.0':
@@ -6326,7 +6327,7 @@ snapshots:
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
 
-  eslint-plugin-oxlint@1.23.0:
+  eslint-plugin-oxlint@1.32.0:
     dependencies:
       jsonc-parser: 3.3.1
 
@@ -7618,16 +7619,16 @@ snapshots:
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
-  oxlint@1.23.0:
+  oxlint@1.32.0:
     optionalDependencies:
-      '@oxlint/darwin-arm64': 1.23.0
-      '@oxlint/darwin-x64': 1.23.0
-      '@oxlint/linux-arm64-gnu': 1.23.0
-      '@oxlint/linux-arm64-musl': 1.23.0
-      '@oxlint/linux-x64-gnu': 1.23.0
-      '@oxlint/linux-x64-musl': 1.23.0
-      '@oxlint/win32-arm64': 1.23.0
-      '@oxlint/win32-x64': 1.23.0
+      '@oxlint/darwin-arm64': 1.32.0
+      '@oxlint/darwin-x64': 1.32.0
+      '@oxlint/linux-arm64-gnu': 1.32.0
+      '@oxlint/linux-arm64-musl': 1.32.0
+      '@oxlint/linux-x64-gnu': 1.32.0
+      '@oxlint/linux-x64-musl': 1.32.0
+      '@oxlint/win32-arm64': 1.32.0
+      '@oxlint/win32-x64': 1.32.0
 
   p-limit@3.1.0:
     dependencies:
