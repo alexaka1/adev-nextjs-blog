@@ -4,22 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check-site-meta": "pnpx check-site-meta --no-analytics http://localhost:3000",
-    "doctor:lockfile": "pnpm i --fix-lockfile",
+    "check-site-meta": "bunx check-site-meta --no-analytics http://localhost:3000",
+    "doctor:lockfile": "bun install --force",
     "dev": "next dev --webpack",
     "dev:turbo": "next dev",
     "dev:sw": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "lint": "pnpm exec oxlint && eslint .",
-    "lint:fix": "pnpm exec oxlint --fix && eslint --fix .",
-    "fmt": "prettier --check .",
-    "fmt:fix": "prettier --write .",
-    "renovate:debug": "LOG_LEVEL=debug pnpx renovate --platform=local",
-    "tw:upgrade": "pnpx @tailwindcss/upgrade@latest"
+    "lint": "bunx oxlint && bunx eslint .",
+    "lint:fix": "bunx oxlint --fix && bunx eslint --fix .",
+    "fmt": "bunx prettier --check .",
+    "fmt:fix": "bunx prettier --write .",
+    "renovate:debug": "LOG_LEVEL=debug bunx renovate --platform=local",
+    "tw:upgrade": "bunx @tailwindcss/upgrade@latest"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "bun": ">=1.3.4"
   },
   "engineStrict": true,
   "dependencies": {
@@ -67,5 +67,5 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.49.0"
   },
-  "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501"
+  "packageManager": "bun@1.3.4"
 }
