@@ -5,16 +5,15 @@
   "type": "module",
   "scripts": {
     "check-site-meta": "bunx --bun check-site-meta --no-analytics http://localhost:3000",
-    "doctor:lockfile": "bun install --lockfile-only --save-text-lockfile --frozen-lockfile",
-    "dev": "bun exec --bun next dev --webpack",
-    "dev:turbo": "bun exec --bun next dev",
-    "dev:sw": "bun exec --bun next dev --experimental-https",
-    "build": "bun exec --bun next build",
-    "start": "bun exec --bun next start",
-    "lint": "bun exec --bun oxlint && bun exec --bun eslint .",
-    "lint:fix": "bun exec --bun oxlint --fix && bun exec --bun eslint --fix .",
-    "fmt": "bun exec --bun prettier --check .",
-    "fmt:fix": "bun exec --bun prettier --write .",
+    "dev": "next dev",
+    "dev:webpack": "bun run --bun next dev --webpack",
+    "dev:sw": "next dev --experimental-https",
+    "build": "next build",
+    "start": "bun run --bun next start",
+    "lint": "bun run --bun oxlint && bun run --bun eslint .",
+    "lint:fix": "bun run --bun oxlint --fix && bun run --bun eslint --fix .",
+    "fmt": "bun run --bun prettier --check .",
+    "fmt:fix": "bun run --bun prettier --write .",
     "renovate:debug": "LOG_LEVEL=debug bunx --bun renovate --platform=local",
     "tw:upgrade": "bunx --bun @tailwindcss/upgrade@latest"
   },
@@ -70,5 +69,9 @@
   "trustedDependencies": [
     "@sentry/cli",
     "unrs-resolver"
-  ]
+  ],
+  "overrides": {
+    "brace-expansion": ">=2.0.2",
+    "mdast-util-to-hast": ">=13.2.1"
+  }
 }

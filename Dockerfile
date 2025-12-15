@@ -18,7 +18,7 @@ COPY . .
 
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
     --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
-    bun --bun run build
+    bun run build
 
 FROM base AS runner
 WORKDIR /app
