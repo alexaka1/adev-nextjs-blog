@@ -1,17 +1,15 @@
-FROM --platform=$BUILDPLATFORM node:24-alpine@sha256:7e0bd0460b26eb3854ea5b99b887a6a14d665d14cae694b78ae2936d14b2befb AS base
+FROM --platform=$BUILDPLATFORM oven/bun:1.3.4-alpine AS base
 ARG CI=true
 ARG NEXT_TELEMETRY_DISABLED
 LABEL authors="alexaka1"
 
-# Install dependencies only when needed
-FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN corepack enable && corepack install && pnpm install --frozen-lockfile;
+FROM base AS deps
+COPY bun.lock package.json ./
+RUN bun install --frozen-lockfile
 
-# Rebuild the source code only when needed
 FROM base AS builder
 ARG VERCEL_PROJECT_PRODUCTION_URL
 WORKDIR /app
@@ -20,9 +18,8 @@ COPY . .
 
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
     --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
-     corepack enable && corepack install && pnpm run build;
+    bun run build
 
-# Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
@@ -47,4 +44,4 @@ ENV PORT=3000
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
-CMD ["node", "server.js"]
+CMD ["bun", "--bun", "server.js"]

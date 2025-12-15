@@ -1,0 +1,3 @@
+[install]
+exact = true
+# publicHoistPattern = ["*eslint*", "*@nextui-org/*", "@t3-oss/*", "@sentry/core", "@wooorm/starry-night", "import-in-the-middle", "require-in-the-middle"]
