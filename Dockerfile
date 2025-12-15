@@ -7,7 +7,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 FROM base AS deps
-COPY bun.lock package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY bun.lock package.json ./
 RUN bun install --frozen-lockfile
 
 FROM base AS builder
