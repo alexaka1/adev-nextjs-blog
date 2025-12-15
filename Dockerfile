@@ -18,7 +18,7 @@ COPY . .
 
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
     --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN,env=NEXT_PUBLIC_SENTRY_DSN \
-    bun run build
+    bun --bun run build
 
 FROM base AS runner
 WORKDIR /app
@@ -44,4 +44,4 @@ ENV PORT=3000
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
-CMD ["bun", "server.js"]
+CMD ["bun", "--bun", "server.js"]

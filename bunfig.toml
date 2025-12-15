@@ -1,0 +1,5 @@
+[install]
+onlyBuiltDependencies = ["@sentry/cli", "sharp", "unrs-resolver"]
+publicHoistPattern = ["*eslint*", "*@nextui-org/*", "@t3-oss/*", "@sentry/core", "@wooorm/starry-night", "import-in-the-middle", "require-in-the-middle"]
+savePrefix = ""
+packageManagerStrictVersion = true
