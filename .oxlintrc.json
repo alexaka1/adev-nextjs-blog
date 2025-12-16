@@ -1,22 +1,60 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": [
+    "eslint",
     "jsx-a11y",
     "nextjs",
     "import",
     "react",
+    "react-perf",
     "typescript",
     "unicorn",
-    "oxc"
+    "oxc",
+    "vitest",
+    "promise"
   ],
   "env": {
     "builtin": true
   },
+  "jsPlugins": ["eslint-plugin-import-zod"],
   "ignorePatterns": [
     "node_modules/**",
     ".next/**",
     "out/**",
     "build/**",
     "next-env.d.ts"
+  ],
+  "rules": {
+    "import-zod/prefer-zod-namespace": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/array-type": "off",
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/consistent-type-imports": [
+          "warn",
+          {
+            "prefer": "type-imports",
+            "fixStyle": "inline-type-imports"
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            "checksVoidReturn": {
+              "attributes": false
+            }
+          }
+        ]
+      }
+    }
   ]
 }
