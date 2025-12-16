@@ -16,9 +16,7 @@
   "env": {
     "builtin": true
   },
-  "jsPlugins": [
-    "eslint-plugin-import-zod"
-  ],
+  "jsPlugins": ["eslint-plugin-import-zod"],
   "ignorePatterns": [
     "node_modules/**",
     ".next/**",
@@ -26,33 +24,34 @@
     "build/**",
     "next-env.d.ts"
   ],
-  "overrides": [{
-    "files": ["*.ts", "*.tsx"],
-    "rules": {
-      "@typescript-eslint/array-type": "off",
-      "@typescript-eslint/consistent-type-definitions": "off",
-      "@typescript-eslint/consistent-type-imports": [
-        "warn",
-        {
-          "prefer": "type-imports",
-          "fixStyle": "inline-type-imports"
-        }
-      ],
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          "argsIgnorePattern": "^_"
-        }
-      ],
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": {
-            "attributes": false
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/array-type": "off",
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/consistent-type-imports": [
+          "warn",
+          {
+            "prefer": "type-imports",
+            "fixStyle": "inline-type-imports"
           }
-        }
-      ]
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            "checksVoidReturn": {
+              "attributes": false
+            }
+          }
+        ]
+      }
     }
-  }
   ]
 }
