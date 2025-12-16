@@ -17,10 +17,10 @@
     "renovate:debug": "LOG_LEVEL=debug bunx --bun renovate --platform=local",
     "tw:upgrade": "bunx --bun @tailwindcss/upgrade@latest"
   },
-  "engines": {
-    "bun": ">=1.3.4"
+  "overrides": {
+    "brace-expansion": ">=2.0.2",
+    "mdast-util-to-hast": ">=13.2.1"
   },
-  "engineStrict": true,
   "dependencies": {
     "@mdx-js/loader": "3.1.1",
     "@mdx-js/react": "3.1.1",
@@ -66,12 +66,12 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.49.0"
   },
+  "engines": {
+    "bun": ">=1.3.4"
+  },
+  "engineStrict": true,
   "trustedDependencies": [
     "@sentry/cli",
     "unrs-resolver"
-  ],
-  "overrides": {
-    "brace-expansion": ">=2.0.2",
-    "mdast-util-to-hast": ">=13.2.1"
-  }
+  ]
 }

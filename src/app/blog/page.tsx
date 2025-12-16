@@ -27,8 +27,9 @@ export default async function BlogIndexPage({
   searchParams,
 }: BlogIndexPageProps) {
   const searchParamsAwaited = await searchParams;
-  const currentPage =
-    searchParamsAwaited.page ? parseInt(searchParamsAwaited.page) : 1;
+  const currentPage = searchParamsAwaited.page
+    ? parseInt(searchParamsAwaited.page)
+    : 1;
   const pageSize = 5; // Number of posts per page
 
   const {
@@ -42,9 +43,10 @@ export default async function BlogIndexPage({
       <h1 className="mb-8 text-4xl font-bold capitalize">Blog posts</h1>
 
       <div className="space-y-8">
-        {posts.length === 0 ?
+        {posts.length === 0 ? (
           <p>No blog posts found.</p>
-        : posts.map((post) => (
+        ) : (
+          posts.map((post) => (
             <article key={post.slug}>
               <Link href={`/blog/${post.slug}`} className="block">
                 <Card>
@@ -73,7 +75,7 @@ export default async function BlogIndexPage({
               </Link>
             </article>
           ))
-        }
+        )}
       </div>
 
       {totalPages > 1 && (

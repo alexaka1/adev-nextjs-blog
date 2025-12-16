@@ -2,9 +2,9 @@ name: Lint
 
 on:
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
-permissions: { }
+permissions: {}
 env:
   CI: 'true'
   DO_NOT_TRACK: '1'
@@ -28,7 +28,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
         with:
-          bun-version-file: ".bun-version"
+          bun-version-file: '.bun-version'
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
