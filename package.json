@@ -52,6 +52,7 @@
     "@types/node": "24.10.3",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "eslint-plugin-import-zod": "1.2.1",
     "oxfmt": "0.18.0",
     "oxlint": "1.32.0",
     "oxlint-tsgolint": "0.9.1",
