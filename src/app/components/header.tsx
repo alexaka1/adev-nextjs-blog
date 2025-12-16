@@ -42,9 +42,7 @@ export default function Header() {
           }}
           title={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
-          {isMenuOpen ?
-            <X size={24} />
-          : <Menu size={24} />}
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </Button>
 
         {/* Desktop navigation */}
