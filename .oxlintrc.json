@@ -24,6 +24,9 @@
     "build/**",
     "next-env.d.ts"
   ],
+  "rules": {
+    "import-zod/prefer-zod-namespace": "error"
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],

@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "bun run --bun next start",
     "lint": "bun run --bun oxlint --type-aware",
-    "lint:fix": "bun run --bun oxlintc --type-aware --fix",
+    "lint:fix": "bun run --bun oxlint --type-aware --fix",
     "fmt": "bun run --bun oxfmt --check",
     "fmt:fix": "bun run --bun oxfmt",
     "renovate:debug": "LOG_LEVEL=debug bunx --bun renovate --platform=local",
