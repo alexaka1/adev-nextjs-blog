@@ -1,4 +1,4 @@
-// @ts-check
+// left here as reference, for when oxlint gets more features, if more roles should be enabled
 
 import js from '@eslint/js';
 import ts from 'typescript-eslint';

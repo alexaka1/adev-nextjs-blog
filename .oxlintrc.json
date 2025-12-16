@@ -1,17 +1,23 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": [
+    "eslint",
     "jsx-a11y",
     "nextjs",
     "import",
     "react",
+    "react-perf",
     "typescript",
     "unicorn",
-    "oxc"
+    "oxc",
+    "vitest",
+    "promise"
   ],
   "env": {
     "builtin": true
   },
+  "jsPlugins": [
+  ],
   "ignorePatterns": [
     "node_modules/**",
     ".next/**",
