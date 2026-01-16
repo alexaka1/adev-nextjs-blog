@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM oven/bun:1.3.5-alpine@sha256:7156fcc0cee0194d390bfaf7f0eeda9a5e383e70cc90f31aad3a2440a033d7dc AS base
+FROM --platform=$BUILDPLATFORM oven/bun:1.3.6-alpine@sha256:819f91180e721ba09e0e5d3eb7fb985832fd23f516e18ddad7e55aaba8100be7 AS base
 ARG CI=true
 ARG NEXT_TELEMETRY_DISABLED
 LABEL authors="alexaka1"
