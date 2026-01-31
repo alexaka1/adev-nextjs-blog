@@ -19,6 +19,29 @@ According to [Microsoft's official .NET Support Policy](https://dotnet.microsoft
 
 Sounds reasonable, right? The problem is in the definition of "critical." A bug that completely breaks your production workflow? Not critical enough. A missing feature that forces you to maintain ugly workarounds? Definitely not critical enough.
 
+## Some .NET Projects Already Do It Better
+
+Here's the irony: Microsoft already knows the standard .NET support policy is too rigid for modern development. That's why some projects have carved out their own support policies that allow faster iteration.
+
+[.NET Aspire](https://dotnet.microsoft.com/en-us/platform/support/policy/aspire) ships on its own cadence, decoupled from the .NET runtime releases. This means the team can ship bug fixes, new features, and improvements without waiting for the next .NET major version. If there's a bug in Aspire, they can fix it and ship it.
+
+Similarly, the [.NET Platform Extensions](https://dotnet.microsoft.com/en-us/platform/support/policy/extensions) (things like `Microsoft.Extensions.Hosting`, `Microsoft.Extensions.DependencyInjection`, etc.) have their own support lifecycle. These packages can and do ship updates independently of the runtime.
+
+So why can't the rest of .NET work this way? Why is the Razor compiler locked to the runtime release schedule? Why can't globalization data be updated independently? The tooling is there. The precedent is there. The will, apparently, is not.
+
+## LTS Is Too Short and Too Long at the Same Time
+
+Compare .NET's 3-year LTS to [.NET Framework's support policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-framework). .NET Framework 4.8 is supported as part of the Windows lifecycle — essentially forever, or at least until Windows stops being a thing (so, forever).
+
+Three years is not "long-term support." It's barely medium-term. For enterprise applications that need to run for a decade or more, 3 years is a blink. You're constantly on an upgrade treadmill, moving from one LTS to the next, just to stay in support.
+
+But here's the cruel paradox: while 3 years is too short for actual long-term stability, it's **way too long** to wait for a bug fix. You're stuck in a worst-of-both-worlds situation:
+
+- **Too short** for enterprises that need true long-term stability (decades, not years)
+- **Too long** for developers who need bug fixes shipped in weeks, not years
+
+.NET Framework gave enterprises true long-term support. Modern .NET gives them a 3-year countdown timer. Neither gives them timely bug fixes.
+
 ## Real World Examples
 
 Let me walk you through some real issues I've personally experienced or observed in the .NET ecosystem. These aren't edge cases — they're legitimate bugs that affect real applications.
