@@ -65,7 +65,8 @@ Let's say .NET 10 (LTS) ships in **November 2025**:
 But wait — you can't upgrade to .NET 12 on day one either. You need those same 6-8 months to evaluate, test, and roll out. Which means:
 
 - **You're effectively on .NET 10** from July 2026 to ~July 2028 = **2 years**
-- **Then you spend 6-8 months** migrating to .NET 12
+- **But wait** — you spend the last 6-8 months of that upgrading to .NET 12
+- **That leaves only ~18 months** of truly "worry-free" LTS usage before the upgrade cycle begins again
 - **Then you're on .NET 12** for 2 years before the cycle repeats
 
 ### The Real Cost
@@ -161,15 +162,15 @@ Looking at [.NET 8's servicing history](https://github.com/dotnet/runtime/pulls?
 
 ### Crashes and Runtime Stability
 
-- **[AssemblyLoadContext.Unload crash](https://github.com/dotnet/runtime/pull/91346)** — When calling `AssemblyLoadContext.Unload` twice, the runtime would crash with a FailFast. This was backported because it caused application crashes.
+- **[Debugger crash fix](https://github.com/dotnet/runtime/pull/110651)** — A crash while debugging apps due to a null reference. Merged December 2024, shipped in .NET 8.0.13.
 
-- **[GC freelist crash](https://github.com/dotnet/runtime/pull/104992)** — A garbage collection issue that could cause crashes under specific conditions.
+- **[GC freelist crash](https://github.com/dotnet/runtime/pull/104992)** — A garbage collection issue that could cause crashes when using `GC.RegisterForFullGCNotification`. Customer-reported, merged July 2024, shipped in .NET 8.0.10.
 
-- **[Android method compilation crash](https://github.com/dotnet/runtime/pull/109511)** — A Mono JIT crash affecting Android applications.
+- **[Android method compilation crash](https://github.com/dotnet/runtime/pull/109511)** — A Mono JIT crash affecting Android applications. Customer-reported, merged November 2024, shipped in .NET 8.0.12.
 
 ### Regressions from Previous Versions
 
-- **[System.Text.Json source generator regression](https://github.com/dotnet/runtime/pull/98082)** — Properties using C# reserved keywords as identifiers caused the source generator to produce uncompilable code. This was a regression from .NET 7 and was backported.
+- **[System.Text.Json source generator regression](https://github.com/dotnet/runtime/pull/98082)** — Properties using C# reserved keywords as identifiers caused the source generator to produce uncompilable code. This was a regression from .NET 7, merged February 2024, shipped in .NET 8.0.3.
 
 ### The Pattern That Emerges
 
