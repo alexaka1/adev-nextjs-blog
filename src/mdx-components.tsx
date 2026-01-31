@@ -220,20 +220,12 @@ function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
   );
 }
 
-const codeBlockBase =
-  'bg-[var(--code-block-bg)] text-[var(--code-block-text)] border border-[color-mix(in_oklch,var(--code-block-text)_15%,transparent)] rounded-xl px-4 py-3 shadow-[0_10px_30px_color-mix(in_oklch,var(--code-block-bg)_40%,transparent)]';
-
-const inlineCodeBase =
-  'bg-[var(--code-inline-bg)] text-[var(--code-inline-text)] border border-[color-mix(in_oklch,var(--code-inline-text)_30%,transparent)] rounded-lg px-[0.45em] py-[0.15em] font-semibold';
-
 const CodeBlock = ({ children }: { children: ReactNode }) => (
-  <pre className={codeBlockBase}>
-    <code className="bg-transparent text-[inherit] text-[0.95rem] leading-[1.6]">
-      {children}
-    </code>
+  <pre className="mdx-pre">
+    <code>{children}</code>
   </pre>
 );
 
 const InlineCode = ({ children }: { children: ReactNode }) => (
-  <code className={inlineCodeBase}>{children}</code>
+  <code className="mdx-inline-code">{children}</code>
 );

@@ -87,3 +87,31 @@
     @apply font-heading;
   }
 }
+
+@layer components {
+  .mdx-pre {
+    background: var(--code-block-bg);
+    color: var(--code-block-text);
+    border: 1px solid color-mix(in oklch, var(--code-block-text) 15%, transparent);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 10px 30px color-mix(in oklch, var(--code-block-bg) 40%, transparent);
+    overflow-x: auto;
+  }
+
+  .mdx-pre code {
+    background: transparent;
+    color: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .mdx-inline-code {
+    background: var(--code-inline-bg);
+    color: var(--code-inline-text);
+    border: 1px solid color-mix(in oklch, var(--code-inline-text) 30%, transparent);
+    border-radius: 8px;
+    padding: 0.15em 0.45em;
+    font-weight: 600;
+  }
+}
