@@ -221,11 +221,15 @@ function CustomLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
 }
 
 const CodeBlock = ({ children }: { children: ReactNode }) => (
-  <pre className="mdx-pre">
-    <code>{children}</code>
+  <pre className="bg-[var(--code-block-bg)] text-[var(--code-block-text)] border border-[color-mix(in_oklch,var(--code-block-text)_15%,transparent)] rounded-xl px-4 py-3 shadow-[0_10px_30px_color-mix(in_oklch,var(--code-block-bg)_40%,transparent)] overflow-x-auto">
+    <code className="bg-transparent text-[inherit] text-[0.95rem] leading-[1.6]">
+      {children}
+    </code>
   </pre>
 );
 
 const InlineCode = ({ children }: { children: ReactNode }) => (
-  <code className="mdx-inline-code">{children}</code>
+  <code className="bg-[var(--code-inline-bg)] text-[var(--code-inline-text)] border border-[color-mix(in_oklch,var(--code-inline-text)_30%,transparent)] rounded-lg px-[0.45em] py-[0.15em] font-semibold">
+    {children}
+  </code>
 );
