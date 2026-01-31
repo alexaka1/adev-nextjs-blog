@@ -5,7 +5,7 @@ summary: "GitHub announced — then rolled back — pricing changes for Actions.
 author: "Alex Martossy"
 ---
 
-In early 2026, GitHub [announced pricing changes for GitHub Actions](https://github.com/resources/insights/2026-pricing-changes-for-github-actions) that would have charged users for orchestration time on self-hosted runners. Following significant pushback from the community, they rolled it back. But this whole episode exposed a deeper problem: GitHub Actions has fundamental platform limitations that force developers to burn CI minutes on workarounds — and then GitHub wanted to charge us for those workarounds.
+In December 2025, GitHub [announced pricing changes for GitHub Actions](https://github.com/resources/insights/2026-pricing-changes-for-github-actions) that would have charged users for orchestration time on self-hosted runners. Following significant pushback from the community, they rolled it back. But this whole episode exposed a deeper problem: GitHub Actions has fundamental platform limitations that force developers to burn CI minutes on workarounds — and then GitHub wanted to charge us for those workarounds.
 
 Let me be clear upfront: I have no problem with GitHub charging fair prices for compute. Running infrastructure isn't free. But charging for workarounds to their own limitations? That's a different story entirely.
 
@@ -206,7 +206,7 @@ If GitHub billed by the second (rounding up), the cost would be dramatically red
 
 ## The Gentleman's Agreement
 
-There used to be an unspoken understanding between GitHub and power users. GitHub wouldn't fix these platform limitations (path filtering, required checks, matrix stability), but in exchange, we wouldn't pay for the workarounds. We'd run our orchestration jobs on self-hosted runners — which were free from GitHub's perspective — and everyone would be happy.
+There used to be an unspoken understanding between GitHub and power users. GitHub wouldn't fix these platform limitations (path filtering, required checks, matrix stability), but in exchange, we wouldn't pay for the workarounds. We'd run our orchestration jobs on self-hosted runners — which were free — and everyone would be happy.
 
 The proposed pricing changes would have broken this agreement. Now we'd have to pay for the privilege of working around GitHub's own limitations. It felt less like a pricing update and more like a protection racket.
 
