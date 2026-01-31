@@ -42,6 +42,55 @@ But here's the cruel paradox: while 3 years is too short for actual long-term st
 
 .NET Framework gave enterprises true long-term support. Modern .NET gives them a 3-year countdown timer. Neither gives them timely bug fixes.
 
+## The Enterprise Upgrade Treadmill
+
+Let's break down what "3 years of support" actually means for an enterprise. Spoiler: it's closer to 2 years of usable time, at best.
+
+According to [Microsoft's .NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy), LTS releases ship every 2 years (even-numbered versions: .NET 6, 8, 10, etc.) and each is supported for 3 years. That sounds like a comfortable 1-year overlap between LTS versions, right? Let's see how this plays out in practice.
+
+### A Realistic Enterprise Timeline
+
+Let's say .NET 10 (LTS) ships in **November 2025**:
+
+1. **November 2025 – February 2026 (3-4 months)**: Your enterprise evaluates .NET 10. You run compatibility tests, check third-party dependencies, train developers, and update CI/CD pipelines. No enterprise upgrades to a new major version on day one.
+
+2. **March 2026 – June 2026 (3-4 months)**: You pilot .NET 10 on non-critical applications. You discover issues, file bugs (that won't be backported, of course), and develop workarounds.
+
+3. **July 2026**: You finally roll out .NET 10 to production. It's now **8 months** after release.
+
+4. **November 2027**: .NET 12 (the next LTS) ships. The clock starts ticking again.
+
+5. **November 2028**: .NET 10 goes out of support. You have exactly **1 year** from when the next LTS ships to migrate.
+
+But wait — you can't upgrade to .NET 12 on day one either. You need those same 6-8 months to evaluate, test, and roll out. Which means:
+
+- **You're really on .NET 10** from July 2026 to ~July 2028 = **2 years**
+- **Then you spend 6-8 months** migrating to .NET 12
+- **Then you're on .NET 12** for 2 years before the cycle repeats
+
+### The Real Cost
+
+Every 2 years, your enterprise has to:
+
+- Audit all applications for breaking changes
+- Update all NuGet packages to compatible versions
+- Retrain developers on new features and deprecations  
+- Update CI/CD pipelines, Docker images, and deployment scripts
+- Test everything — unit tests, integration tests, performance tests
+- Coordinate the rollout across teams and services
+
+This isn't a one-person afternoon project. For a medium-sized enterprise with dozens of services, this is a **months-long initiative** that pulls developers away from feature work.
+
+### Compare This to .NET Framework
+
+.NET Framework 4.8 shipped in **April 2019**. It's still supported as of 2026, with no end-of-life date in sight. That's **7+ years** and counting, with zero forced major version upgrades.
+
+An enterprise that adopted .NET Framework 4.8 in 2019 is still running it in production, still receiving security patches, and hasn't had to spend a single sprint on a framework upgrade.
+
+An enterprise that adopted .NET 6 (LTS) in November 2021 has already been forced to upgrade to .NET 8, and will soon be forced to upgrade to .NET 10. That's **two major framework upgrades** in the same timeframe where .NET Framework required **zero**.
+
+This is what "long-term support" used to mean. Three years isn't long-term — it's just long enough to be inconvenient.
+
 ## Real World Examples
 
 Let me walk you through some real issues I've personally experienced or observed in the .NET ecosystem. These aren't edge cases — they're legitimate bugs that affect real applications.
