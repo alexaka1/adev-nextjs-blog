@@ -19,6 +19,10 @@
   --chart-4: #05e17a;
   --chart-5: #7a83ff;
   --chart-active-dot: #000;
+  --code-block-bg: oklch(18% 0.02 250);
+  --code-block-text: oklch(94% 0 0);
+  --code-inline-bg: oklch(90% 0.015 250);
+  --code-inline-text: oklch(24% 0.04 250);
 }
 
 .dark {
@@ -36,6 +40,10 @@
   --chart-4: #04c86d;
   --chart-5: #7a83ff;
   --chart-active-dot: #fff;
+  --code-block-bg: oklch(24% 0.02 240);
+  --code-block-text: oklch(96% 0 0);
+  --code-inline-bg: oklch(28% 0.015 240);
+  --code-inline-text: oklch(96% 0 0);
 }
 
 @theme inline {
@@ -77,5 +85,32 @@
   h5,
   h6 {
     @apply font-heading;
+  }
+}
+
+@layer components {
+  .prose pre {
+    background: var(--code-block-bg);
+    color: var(--code-block-text);
+    border: 1px solid color-mix(in oklch, var(--code-block-text) 15%, transparent);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 10px 30px color-mix(in oklch, var(--code-block-bg) 40%, transparent);
+  }
+
+  .prose pre code {
+    background: transparent;
+    color: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .prose :not(pre) > code {
+    background: var(--code-inline-bg);
+    color: var(--code-inline-text);
+    border: 1px solid color-mix(in oklch, var(--code-inline-text) 30%, transparent);
+    border-radius: 8px;
+    padding: 0.15em 0.45em;
+    font-weight: 600;
   }
 }
