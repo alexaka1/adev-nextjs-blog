@@ -149,6 +149,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </blockquote>
     ),
+    pre: ({ children }) => (
+      <pre className="my-4 overflow-x-auto rounded-base border-2 border-border bg-[#f6f8fa] p-4 font-mono text-sm shadow-shadow dark:bg-[#161b22]">
+        {children}
+      </pre>
+    ),
     code: ({ children }) => (
       <code className="rounded bg-main/60 px-1 py-0.5 font-mono text-foreground">
         {children}
