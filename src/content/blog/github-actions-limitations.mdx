@@ -1,0 +1,262 @@
+---
+title: "GitHub Actions Needs to Fix the Platform Before Playing Toll Booth"
+publishedAt: "2026-01-31"
+summary: "GitHub announced — then rolled back — pricing changes for Actions. But the bigger issue isn't the price, it's that we're forced to pay for workarounds to GitHub's own limitations."
+author: "Alex Martossy"
+---
+
+In early 2026, GitHub [announced pricing changes for GitHub Actions](https://github.com/resources/insights/2026-pricing-changes-for-github-actions) that would have charged users for orchestration time on self-hosted runners. Following significant pushback from the community, they rolled it back. But this whole episode exposed a deeper problem: GitHub Actions has fundamental platform limitations that force developers to burn CI minutes on workarounds — and then GitHub wanted to charge us for those workarounds.
+
+Let me be clear upfront: I have no problem with GitHub charging fair prices for compute. Running infrastructure isn't free. But charging for workarounds to their own limitations? That's a different story entirely.
+
+## The Path Filter Problem
+
+Here's a scenario every GitHub Actions user has encountered. You have a repository with source code and documentation. You set up a required workflow that runs tests. This workflow must pass before a PR can be merged — standard stuff.
+
+Now, you're being a good citizen. You don't want to waste compute and energy running tests when someone only changed a README file. So you add path filters to your workflow:
+
+```yaml
+name: Tests
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'package.json'
+```
+
+You commit this, push it, and then someone opens a PR that only updates the README. The workflow doesn't run (good!), but now the PR can't be merged. Why? Because the required status check never ran, so GitHub is still waiting for it.
+
+This is a **platform limitation**, [acknowledged by GitHub's own documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/troubleshooting-required-status-checks#handling-skipped-but-required-checks):
+
+> A workflow that is skipped due to path filtering, branch filtering, or a commit message will be reported as "Pending". A pull request that requires the workflow to be successful will be blocked from merging.
+
+Their recommended solution? Run a separate job that checks paths and conditionally skips the expensive work. Let me show you what this looks like in practice.
+
+## The Workaround That Burns CI Minutes
+
+To solve the path filter problem, you need a job that always runs, checks if the expensive work should happen, and provides a stable status check name. Here's a real-world example using [dorny/paths-filter](https://github.com/dorny/paths-filter):
+
+```yaml
+name: Tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  path-filter:
+    name: Determine if tests should run
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            code:
+              - 'src/**'
+              - 'tests/**'
+              - 'package.json'
+
+  test:
+    name: Run tests
+    needs: path-filter
+    if: needs.path-filter.outputs.should-run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
+```
+
+See the problem? Even when only the README changed, we still have to run the `path-filter` job. This job takes maybe 10-15 seconds. But GitHub bills in full minute increments. So those 15 seconds cost you 1 minute of billed time.
+
+Now multiply this by:
+- Every PR in your repo
+- Every push to a PR (reviews often result in 5-10 pushes)
+- Every workflow in your repo (tests, lint, SAST, compliance checks)
+- Every repository in your organization
+
+Suddenly you're burning through your included minutes just to work around GitHub's limitations. Before the actual work even starts.
+
+## The Matrix Job Problem
+
+Path filtering isn't the only limitation. Let's talk about matrix jobs and required status checks.
+
+Suppose you have a test workflow that runs on multiple platforms:
+
+```yaml
+jobs:
+  test:
+    name: Test
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
+```
+
+This creates three jobs:
+- `Test (ubuntu-latest)`
+- `Test (windows-latest)`
+- `Test (macos-latest)`
+
+Now you want to require this workflow to pass before merging. Which job do you add as a required status check? If you pick `Test (ubuntu-latest)`, you're not actually requiring all platforms to pass. If you add all three, you have to manually update the branch protection rules every time you change the matrix.
+
+But here's the real kicker: if you add path filtering to this workflow, and the job gets skipped, GitHub reports a single `Test` job as skipped — not the matrix expansions. The job name is **unstable depending on whether it ran or was skipped**.
+
+The workaround? Add another job that depends on the matrix jobs and provides a stable name:
+
+```yaml
+jobs:
+  test:
+    name: Test
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
+
+  test-success:
+    name: All tests passed
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+    steps:
+      - name: Fail if tests failed
+        if: needs.test.result == 'failure'
+        run: exit 1
+      - name: Fail if tests were cancelled
+        if: needs.test.result == 'cancelled'
+        run: exit 1
+      - name: Success
+        run: echo "All tests passed"
+```
+
+Again, we're forced to run a job whose sole purpose is to provide a stable status check name. This job does almost nothing — it runs `exit 1` or `echo` — but it still burns a full minute of billing time.
+
+## The Dynamic Matrix Problem
+
+It gets worse when you need dynamic matrices. Imagine a monorepo where you only want to run tests for packages that changed. You need one job to figure out which packages changed, output that as JSON, and then a matrix job consumes that output:
+
+```yaml
+jobs:
+  detect-changes:
+    name: Detect changed packages
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.detect.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: detect
+        run: |
+          # Logic to detect changed packages
+          echo "packages=[\"pkg-a\", \"pkg-b\"]" >> $GITHUB_OUTPUT
+
+  test:
+    name: Test
+    needs: detect-changes
+    if: needs.detect-changes.outputs.packages != '[]'
+    strategy:
+      matrix:
+        package: ${{ fromJSON(needs.detect-changes.outputs.packages) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm test --workspace=${{ matrix.package }}
+```
+
+See how the matrix depends on the output of another job? That's unavoidable — you can't dynamically compute a matrix from within the same job. And because [you can't conditionally skip individual matrix items based on previous job outputs](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations#using-an-output-to-define-two-matrices), you're stuck evaluating conditions before the matrix expands.
+
+More jobs. More CI minutes. More money.
+
+## The Real Numbers
+
+Let me share some real numbers from a single repository's January usage:
+
+| Job | Workflow | Avg Run Time | Runner | Job Runs |
+|-----|----------|--------------|--------|----------|
+| Determine if workflow should run | test.yml | 12.6s | self-hosted | 232 |
+| Success gate | test.yml | 3.2s | self-hosted | 228 |
+| Detect changes | build.yml | 8.4s | self-hosted | 156 |
+| Success gate | lint.yml | 2.8s | self-hosted | 312 |
+
+These "orchestration" jobs represent almost **1,000 job runs per month** — just in one repository. These jobs exist purely to work around GitHub's limitations. They do nothing of value except satisfy the platform's constraints.
+
+If GitHub charged for these at even $0.002 per minute (their proposed self-hosted runner rate), that's $2 per month for one repository, for jobs that accomplish nothing productive. Scale this to an organization with 50 repositories and dozens of workflows, and you're looking at real money for no actual work.
+
+## The Sub-Minute Billing Insult
+
+Here's what makes this truly frustrating: GitHub already tracks usage with second-level precision. The UI shows "Job took 12s" right there on the workflow run page. The billing metrics are clearly available at sub-minute granularity.
+
+But billing rounds up to the nearest minute. A 12-second job costs the same as a 59-second job. You're paying at a 5x markup for those quick orchestration jobs.
+
+If GitHub billed by the second (rounding up), the cost would be dramatically reduced for these orchestration tasks. A 12-second job would cost 12 seconds, not 60. This seems reasonable — it's how most other cloud providers bill compute time.
+
+## The Gentleman's Agreement
+
+There used to be an unspoken understanding between GitHub and power users. GitHub wouldn't fix these platform limitations (path filtering, required checks, matrix stability), but in exchange, we wouldn't pay for the workarounds. We'd run our orchestration jobs on self-hosted runners — which were free from GitHub's perspective — and everyone would be happy.
+
+The proposed pricing changes would have broken this agreement. Now we'd have to pay for the privilege of working around GitHub's own limitations. It felt less like a pricing update and more like a protection racket.
+
+## What GitHub Should Actually Fix
+
+Instead of adding toll booths, GitHub could fix the underlying platform issues:
+
+### 1. Treat Skipped Required Checks as Passing
+
+If a required workflow was skipped due to path filtering and **the path filter explicitly excluded the changed files**, treat that as a pass. The workflow said "I don't care about these files" — honor that.
+
+### 2. Stable Job Names for Matrix Jobs
+
+Matrix jobs should report a stable parent status when skipped. If `Test` is required and the workflow is skipped, report `Test` as skipped-but-passing. If the matrix runs, aggregate the results.
+
+### 3. Dynamic Matrix Filtering
+
+Allow matrix items to be individually skipped based on job outputs without running a separate job. Something like:
+
+```yaml
+strategy:
+  matrix:
+    package: ${{ fromJSON(needs.detect.outputs.packages) }}
+    skip-if: needs.detect.outputs.unchanged[matrix.package] == true
+```
+
+### 4. Sub-Minute Billing
+
+Bill by the second, rounded up. This is industry standard for cloud compute. There's no technical reason to round up to minutes except to charge more.
+
+### 5. Free Tier for Control Plane Jobs
+
+Recognize that some jobs are pure orchestration — they don't do real work. Jobs under 1-2 minutes on self-hosted runners could be exempt from charges, acknowledging that they exist to work around platform limitations.
+
+## The Rolled-Back Pricing Changes
+
+To GitHub's credit, they listened to the feedback and rolled back the proposed changes. The community spoke, and GitHub responded. That's good corporate citizenship.
+
+But the conversation isn't over. The underlying platform limitations that force us to burn CI minutes on workarounds still exist. Every month, developers around the world are paying for jobs that shouldn't need to exist.
+
+## Conclusion
+
+I want to be clear: GitHub Actions is a powerful platform. The integration with the GitHub ecosystem, the marketplace of actions, the flexibility of YAML workflows — it's genuinely useful. And I understand that running infrastructure costs money. Paying for compute is fair.
+
+What's not fair is paying for workarounds to platform limitations. If GitHub is going to charge for orchestration time, they need to first fix the orchestration layer so we don't need these workaround jobs.
+
+Fix the required checks logic. Fix the matrix stability. Add sub-minute billing. Give us the tools to express our workflows cleanly, and we'll happily pay for the actual compute we use.
+
+Until then, maybe hold off on playing bridge troll.
+
+---
+
+*This post was inspired by [community feedback on GitHub's pricing discussion](https://github.com/orgs/community/discussions/181437). The code examples are based on real-world workarounds I've had to implement across multiple repositories.*
