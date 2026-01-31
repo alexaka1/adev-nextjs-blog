@@ -150,12 +150,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </blockquote>
     ),
     pre: ({ children }) => (
-      <pre className="my-4 overflow-x-auto rounded-base border-2 border-border bg-[#f6f8fa] p-4 font-mono text-sm shadow-shadow dark:bg-[#161b22]">
+      <pre className="my-4 overflow-x-auto rounded-base border-2 border-border bg-white p-4 font-mono text-sm text-[#1f2328] shadow-shadow dark:bg-[#0d1117] dark:text-[#e6edf3]">
         {children}
       </pre>
     ),
     code: ({ children }) => (
-      <code className="rounded bg-main/60 px-1 py-0.5 font-mono text-foreground">
+      <code className="rounded bg-[#afb8c133] px-1.5 py-0.5 font-mono text-[#1f2328] dark:bg-[#6e768166] dark:text-[#e6edf3]">
         {children}
       </code>
     ),
