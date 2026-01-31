@@ -150,7 +150,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </blockquote>
     ),
     pre: ({ children }) => (
-      <pre className="my-4 overflow-x-auto rounded-base border-2 border-border bg-white p-4 font-mono text-sm text-[#1f2328] shadow-shadow dark:bg-[#0d1117] dark:text-[#e6edf3]">
+      <pre className="my-4 overflow-x-auto rounded-base border-2 border-border bg-[#0d1117] p-4 font-mono text-sm shadow-shadow">
         {children}
       </pre>
     ),
