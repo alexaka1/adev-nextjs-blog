@@ -153,6 +153,50 @@ Let's consider the worst case scenario for bug reporting in .NET:
 
 This is not hypothetical. This is exactly what happened with the `en-CH` culture bug. Reported in October 2025, fix shipping with .NET 11 in November 2026.
 
+## To Be Fair: What Does Get Backported
+
+It would be unfair to paint this as a one-sided picture. The .NET team does backport fixes to LTS versions — they just have a high bar for what qualifies. Let's look at what actually does get fixed in .NET 8 servicing releases.
+
+Looking at [.NET 8's servicing history](https://github.com/dotnet/runtime/pulls?q=is%3Amerged+base%3Arelease%2F8.0+label%3AServicing-approved), the team has backported hundreds of fixes over the LTS lifecycle. Here are some examples of non-security fixes that made it through:
+
+### Crashes and Runtime Stability
+
+- **[AssemblyLoadContext.Unload crash](https://github.com/dotnet/runtime/pull/91346)** — When calling `AssemblyLoadContext.Unload` twice, the runtime would crash with a FailFast. This was backported because it caused application crashes.
+
+- **[GC freelist crash](https://github.com/dotnet/runtime/pull/104992)** — A garbage collection issue that could cause crashes under specific conditions.
+
+- **[Android method compilation crash](https://github.com/dotnet/runtime/pull/109511)** — A Mono JIT crash affecting Android applications.
+
+### Regressions from Previous Versions
+
+- **[System.Text.Json source generator regression](https://github.com/dotnet/runtime/pull/98082)** — Properties using C# reserved keywords as identifiers caused the source generator to produce uncompilable code. This was a regression from .NET 7 and was backported.
+
+### The Pattern That Emerges
+
+Looking at what gets backported versus what doesn't, a clear pattern emerges:
+
+| **Gets Backported** | **Doesn't Get Backported** |
+|---------------------|---------------------------|
+| Application crashes | Compiler warnings |
+| Data corruption | Incorrect but non-crashing behavior |
+| Regressions from previous versions | Missing features |
+| Security vulnerabilities | Inconvenient workarounds required |
+| Platform support (new OS versions) | Cosmetic issues |
+
+The bar appears to be: **"Will this cause applications to crash, lose data, or be insecure?"** If yes, it gets backported. If no, it waits for the next major version.
+
+### Why the Frustration Remains
+
+The issue isn't that the .NET team is lazy or doesn't care. They clearly do ship fixes to LTS versions. The issue is that the bar for backporting is calibrated for a world where:
+
+1. Workarounds are acceptable for 12+ months
+2. Developer experience issues (like compiler warnings) aren't urgent
+3. Monthly patch cycles are fast enough for regressions
+
+For many of us, that calibration feels out of sync with modern development practices. A crash fix getting backported is great — but telling developers to manually patch their culture data or suppress compiler warnings for a year doesn't feel like enterprise-grade support.
+
+The examples I raised earlier — the `en-CH` culture bug, the Razor trim warnings — aren't crashes. They're "just" incorrect behavior and noisy builds. By the current bar, they don't qualify. But for the developers dealing with them, they're still real problems that affect real productivity.
+
 ## The Modern Web Moves Faster
 
 Compare this to how Bun operates. Bun has a single version — the current one. If there's a bug, they fix it and ship it. Sometimes the same day. Sometimes the same week. The feedback loop is remarkably tight.
