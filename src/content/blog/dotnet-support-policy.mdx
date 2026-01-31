@@ -5,42 +5,42 @@ summary: "LTS doesn't mean your bugs will get fixed. It just means you'll have t
 author: "Alex Martossy"
 ---
 
-.NET has a very specific support cycle, and on paper it looks great. You get a Long-Term Support (LTS) release every two years, which is supported for 3 years. Standard Term Support (STS) releases fill the gaps in between. The marketing is clear: pick LTS for stability, STS if you want the latest features.
+.NET has a well-defined support cycle, and on paper it looks great. You get a Long-Term Support (LTS) release every two years, supported for 3 years. Standard Term Support (STS) releases fill the gaps in between. The marketing is clear: pick LTS for stability, STS if you want the latest features.
 
-But here's the dirty secret nobody tells you: **LTS doesn't mean your bugs will get fixed**. It just means Microsoft will keep shipping security patches while you work around the same bugs for 3 years.
+But here's something that often goes unmentioned: **LTS doesn't mean your bugs will get fixed**. It means Microsoft will keep shipping security patches while you work around the same bugs for the lifetime of that release.
 
 ## The Support Policy on Paper
 
 According to [Microsoft's official .NET Support Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core):
 
 - **LTS releases** are supported for 3 years after the initial release
-- **STS releases** are supported for 18 months after the initial release
+- **STS releases** are supported for 2 years after the initial release
 - Security fixes and critical bugs are backported to supported versions
 
-Sounds reasonable, right? The problem is in the definition of "critical." A bug that completely breaks your production workflow? Not critical enough. A missing feature that forces you to maintain ugly workarounds? Definitely not critical enough.
+Sounds reasonable, right? The challenge is in how "critical" is defined. A bug that disrupts your production workflow? Often not critical enough. A missing feature that forces you to maintain workarounds? Definitely not critical enough.
 
 ## Some .NET Projects Already Do It Better
 
-Here's the irony: Microsoft already knows the standard .NET support policy is too rigid for modern development. That's why some projects have carved out their own support policies that allow faster iteration.
+Here's an interesting observation: Microsoft already knows the standard .NET support policy doesn't fit every scenario. That's why some projects have carved out their own support policies that allow faster iteration.
 
-[.NET Aspire](https://dotnet.microsoft.com/en-us/platform/support/policy/aspire) ships on its own cadence, decoupled from the .NET runtime releases. This means the team can ship bug fixes, new features, and improvements without waiting for the next .NET major version. If there's a bug in Aspire, they can fix it and ship it.
+[.NET Aspire](https://dotnet.microsoft.com/en-us/platform/support/policy/aspire) ships on its own cadence, decoupled from .NET runtime releases. Aspire ships roughly a new major release every year with various minor releases throughout the year. The trade-off? Only the latest release is supported. But this means the team can ship bug fixes, new features, and improvements without waiting for the next .NET major version. If there's a bug in Aspire, they can fix it and ship it promptly.
 
-Similarly, the [.NET Platform Extensions](https://dotnet.microsoft.com/en-us/platform/support/policy/extensions) (things like `Microsoft.Extensions.Hosting`, `Microsoft.Extensions.DependencyInjection`, etc.) have their own support lifecycle. These packages can and do ship updates independently of the runtime.
+Similarly, the [.NET Platform Extensions](https://dotnet.microsoft.com/en-us/platform/support/policy/extensions) (packages like `Microsoft.Extensions.Resilience`, `Microsoft.Extensions.Http.Diagnostics`, etc.) have their own support lifecycle. These packages ship minor releases monthly, and while only the latest version is supported, they can include both fixes and features in any release.
 
-So why can't the rest of .NET work this way? Why is the Razor compiler locked to the runtime release schedule? Why can't globalization data be updated independently? The tooling is there. The precedent is there. The will, apparently, is not.
+So why can't other parts of .NET work this way? Why is the Razor compiler locked to the runtime release schedule? Why can't globalization data be updated independently? The tooling exists. The precedent exists. The model is proven.
 
 ## LTS Is Too Short and Too Long at the Same Time
 
-Compare .NET's 3-year LTS to [.NET Framework's support policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-framework). .NET Framework 4.8 is supported as part of the Windows lifecycle — essentially forever, or at least until Windows stops being a thing (so, forever).
+Compare .NET's 3-year LTS to [.NET Framework's support policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-framework). .NET Framework 4.8.1 is supported as a component of the Windows operating system — meaning it follows the Windows lifecycle. As long as it's installed on a supported version of Windows, it continues to be supported. For enterprise applications, this is effectively indefinite support.
 
-Three years is not "long-term support." It's barely medium-term. For enterprise applications that need to run for a decade or more, 3 years is a blink. You're constantly on an upgrade treadmill, moving from one LTS to the next, just to stay in support.
+Three years is not "long-term support" in the enterprise sense. It's medium-term at best. For applications that need to run for a decade or more, 3 years passes quickly. You're on a perpetual upgrade cycle, moving from one LTS to the next, just to stay in support.
 
-But here's the cruel paradox: while 3 years is too short for actual long-term stability, it's **way too long** to wait for a bug fix. You're stuck in a worst-of-both-worlds situation:
+But here's the frustrating paradox: while 3 years is too short for actual long-term stability, it's **far too long** to wait for a bug fix. You end up in a worst-of-both-worlds situation:
 
 - **Too short** for enterprises that need true long-term stability (decades, not years)
 - **Too long** for developers who need bug fixes shipped in weeks, not years
 
-.NET Framework gave enterprises true long-term support. Modern .NET gives them a 3-year countdown timer. Neither gives them timely bug fixes.
+.NET Framework provided enterprises with genuine long-term support. Modern .NET provides a 3-year countdown timer. Neither provides timely bug fixes during that support window.
 
 ## The Enterprise Upgrade Treadmill
 
@@ -54,17 +54,17 @@ Let's say .NET 10 (LTS) ships in **November 2025**:
 
 1. **November 2025 – February 2026 (3-4 months)**: Your enterprise evaluates .NET 10. You run compatibility tests, check third-party dependencies, train developers, and update CI/CD pipelines. No enterprise upgrades to a new major version on day one.
 
-2. **March 2026 – June 2026 (3-4 months)**: You pilot .NET 10 on non-critical applications. You discover issues, file bugs (that won't be backported, of course), and develop workarounds.
+2. **March 2026 – June 2026 (3-4 months)**: You pilot .NET 10 on non-critical applications. You discover issues, file bugs (that likely won't be backported), and develop workarounds.
 
 3. **July 2026**: You finally roll out .NET 10 to production. It's now **8 months** after release.
 
 4. **November 2027**: .NET 12 (the next LTS) ships. The clock starts ticking again.
 
-5. **November 2028**: .NET 10 goes out of support. You have exactly **1 year** from when the next LTS ships to migrate.
+5. **November 2028**: .NET 10 goes out of support. You have exactly **1 year** from when the next LTS ships to complete your migration.
 
 But wait — you can't upgrade to .NET 12 on day one either. You need those same 6-8 months to evaluate, test, and roll out. Which means:
 
-- **You're really on .NET 10** from July 2026 to ~July 2028 = **2 years**
+- **You're effectively on .NET 10** from July 2026 to ~July 2028 = **2 years**
 - **Then you spend 6-8 months** migrating to .NET 12
 - **Then you're on .NET 12** for 2 years before the cycle repeats
 
@@ -85,11 +85,11 @@ This isn't a one-person afternoon project. For a medium-sized enterprise with do
 
 .NET Framework 4.8 shipped in **April 2019**. It's still supported as of 2026, with no end-of-life date in sight. That's **7+ years** and counting, with zero forced major version upgrades.
 
-An enterprise that adopted .NET Framework 4.8 in 2019 is still running it in production, still receiving security patches, and hasn't had to spend a single sprint on a framework upgrade.
+An enterprise that adopted .NET Framework 4.8 in 2019 is still running it in production, still receiving security patches, and hasn't had to allocate a single sprint to a framework upgrade.
 
-An enterprise that adopted .NET 6 (LTS) in November 2021 has already been forced to upgrade to .NET 8, and will soon be forced to upgrade to .NET 10. That's **two major framework upgrades** in the same timeframe where .NET Framework required **zero**.
+An enterprise that adopted .NET 6 (LTS) in November 2021 has already been forced to upgrade to .NET 8, and will soon need to upgrade to .NET 10. That's **two major framework upgrades** in the same timeframe where .NET Framework required **zero**.
 
-This is what "long-term support" used to mean. Three years isn't long-term — it's just long enough to be inconvenient.
+This is what "long-term support" used to mean. Three years isn't long-term — it's just long enough to create significant upgrade overhead.
 
 ## Real World Examples
 
@@ -97,53 +97,53 @@ Let me walk you through some real issues I've personally experienced or observed
 
 ### The `en-CH` Culture Bug in Blazor WASM
 
-[dotnet/runtime#120898](https://github.com/dotnet/runtime/issues/120898) — This is a bug I reported myself.
+[dotnet/runtime#120898](https://github.com/dotnet/runtime/issues/120898) — This is a bug I reported.
 
-In a Blazor Web App, the `en-CH` culture formats dates differently on the server vs. the client (WASM). On the server you get `18.10.2025 13:30:00`, but on the client you get `18/10/2025 13:30:00`. This is because the ICU data bundled with WASM is outdated compared to what the server OS provides.
+In a Blazor Web App, the `en-CH` culture formats dates differently on the server vs. the client (WASM). On the server you get `18.10.2025 13:30:00`, but on the client you get `18/10/2025 13:30:00`. This happens because the ICU data bundled with WASM is outdated compared to what the server OS provides.
 
 The .NET team acknowledged this and [confirmed the fix will ship with .NET 11](https://github.com/dotnet/runtime/issues/120898#issuecomment-3674665004):
 
 > @alexaka, the new ICU version will be included in the nearest preview of net 11 in early 2026.
 
-When I asked if I'd have to wait a full calendar year for the fix, the answer was essentially: yes. The workaround? Manually patch the culture before setting it, or build your own custom ICU data. For a framework that promises `Front-end web development made easy`, this is absurd.
+When I asked if I'd have to wait a full calendar year for the fix, the answer was essentially: yes. The workaround? Manually patch the culture before setting it, or build your own custom ICU data. For a framework that promises accessible front-end development, this requires a surprising amount of low-level work.
 
 ### Razor Compiler Trim Warnings
 
 [dotnet/razor#11718](https://github.com/dotnet/razor/issues/11718) — Another bug I reported.
 
-When using AOT compilation with Blazor WASM, the Razor compiler produces IL2091 trim warnings for built-in types like `InputRadioGroup`. This is a legitimate bug in the generated code — the Razor source generator doesn't copy over `DynamicallyAccessedMemberTypes` annotations.
+When using AOT compilation with Blazor WASM, the Razor compiler produces IL2091 trim warnings for built-in types like `InputRadioGroup`. This is a bug in the generated code — the Razor source generator doesn't copy over `DynamicallyAccessedMemberTypes` annotations.
 
 The fix was implemented and merged. When I asked if it would be backported to the current LTS (.NET 8) or the current STS (.NET 9), [the response was](https://github.com/dotnet/razor/issues/11718#issuecomment-2888263753):
 
 > This fix is currently targeting .NET 10. I don't think it meets the bar for backporting to earlier releases.
 
-So a bug that produces warnings in a framework configuration that Microsoft actively promotes (AOT + trimming for WASM) doesn't meet the bar for backporting. What bar exactly are we talking about here?
+A bug that produces warnings in a framework configuration that Microsoft actively promotes (AOT + trimming for WASM) doesn't meet the bar for backporting. This leaves developers wondering what exactly would meet that bar.
 
 ### ECDSA XML Signature Support
 
-[dotnet/runtime#55194](https://github.com/dotnet/runtime/issues/55194) — Yet another issue I raised.
+[dotnet/runtime#55194](https://github.com/dotnet/runtime/issues/55194) — Another issue I raised.
 
 The `SignedXml` class's `GetAnyPublicKey` method only returns RSA keys, even though ECDSA signatures are fully supported for signing. This was a problem because my country started requiring ECC-based keys for digital signatures in Q3 2021.
 
-To Microsoft's credit, this was fixed relatively quickly and shipped with .NET 6. But here's the kicker — if you were on .NET 5 (which was still in support at the time), you were out of luck. The fix only shipped with the next major version.
+To Microsoft's credit, this was fixed relatively quickly and shipped with .NET 6. But if you were on .NET 5 (which was still in support at the time), the fix wasn't available. It only shipped with the next major version.
 
 ### The `Microsoft.Extensions.ApiDescription.Server` Disaster
 
-[dotnet/aspnetcore#65054](https://github.com/dotnet/aspnetcore/issues/65054) — This one is particularly frustrating.
+[dotnet/aspnetcore#65054](https://github.com/dotnet/aspnetcore/issues/65054) — This one is particularly notable.
 
-Version 9.0.12 of `Microsoft.Extensions.ApiDescription.Server` shipped with missing DLL files in the tools folder. The package simply doesn't work. Your builds fail with exit code 1.
+Version 9.0.12 of `Microsoft.Extensions.ApiDescription.Server` shipped with missing DLL files in the tools folder. The package simply doesn't work. Builds fail with exit code 1.
 
-This was reported on January 14, 2026. The fix? [It will ship with the March update](https://github.com/dotnet/aspnetcore/issues/65054#issuecomment-3780636048). That's 2 months where a patch release actively breaks everyone's builds who happened to update their dependencies.
+This was reported on January 14, 2026. The fix? [It will ship with the March update](https://github.com/dotnet/aspnetcore/issues/65054#issuecomment-3780636048). That's 2 months where a patch release actively breaks builds for everyone who happened to update their dependencies.
 
 When I asked if there was a workaround, [the official recommendation was](https://github.com/dotnet/aspnetcore/issues/65054#issuecomment-3785918130):
 
 > Yes, I'd recommend downgrading the dependency to 9.0.11 for now.
 
-A patch release broke the build, and the fix won't ship for 2 months. In the Node.js ecosystem, this would be a hotfix within days, not months.
+A patch release broke the build, and the fix won't ship for 2 months. In many other ecosystems, this would warrant an emergency hotfix within days.
 
 ## The Worst Case Scenario
 
-Let's play out the worst case scenario for bug reporting in .NET:
+Let's consider the worst case scenario for bug reporting in .NET:
 
 1. You discover a bug in October
 2. The bug is acknowledged, but it doesn't make the November stable release cut-off
@@ -155,38 +155,38 @@ This is not hypothetical. This is exactly what happened with the `en-CH` culture
 
 ## The Modern Web Moves Faster
 
-Compare this to how Bun operates. Bun has a single version — the current one. If there's a bug, they fix it and ship it. Sometimes the same day. Sometimes the same week. The feedback loop is incredibly tight.
+Compare this to how Bun operates. Bun has a single version — the current one. If there's a bug, they fix it and ship it. Sometimes the same day. Sometimes the same week. The feedback loop is remarkably tight.
 
 When [Oven (the company behind Bun) releases a new version](https://bun.sh/blog), you don't have to wait for a yearly release cycle. You don't have to argue whether your bug "meets the bar" for a backport. You just update and move on.
 
-The Node.js ecosystem learned this lesson years ago. NPM packages ship fixes continuously. Even the Node.js runtime itself has much more frequent releases compared to .NET, and critical fixes are backported aggressively.
+The Node.js ecosystem learned this lesson years ago. NPM packages ship fixes continuously. Even the Node.js runtime itself has more frequent releases compared to .NET, and critical fixes are backported aggressively.
 
 ## Why This Matters
 
 .NET markets itself as an enterprise-ready framework for mission-critical applications. But enterprise doesn't mean slow. Modern enterprises deploy continuously. They iterate quickly. They can't afford to wait 12 months for a date formatting bug to be fixed.
 
-The "LTS means stability" argument falls apart when you realize stability just means "the same bugs, consistently, for 3 years." If I wanted consistent bugs, I could write them myself.
+The "LTS means stability" argument becomes less compelling when you realize stability often just means "the same bugs, consistently, for 3 years." Enterprises want stability in terms of no breaking changes — not stability in terms of bugs that never get addressed.
 
 ## What Would Help
 
-1. **More aggressive backporting** — If a fix is safe (no breaking changes, minimal risk), backport it. The current bar is too high.
+1. **More aggressive backporting** — If a fix is safe (no breaking changes, minimal risk), consider backporting it. The current bar seems higher than necessary for many straightforward fixes.
 
-2. **Faster servicing releases** — Monthly patch releases are not enough when a patch itself introduces regressions. Have a mechanism for hotfixes.
+2. **Faster servicing releases** — Monthly patch releases are helpful, but when a patch itself introduces regressions, there should be a mechanism for expedited hotfixes.
 
-3. **Decouple components from the runtime** — The Razor compiler, for example, could ship independently of the .NET runtime. Roslyn already does this to some extent. Why can't Razor?
+3. **Decouple more components from the runtime** — The Razor compiler, for example, could ship independently of the .NET runtime. Roslyn already does this to some extent. .NET Aspire and Platform Extensions demonstrate this model works. Why not expand it?
 
-4. **Be honest about what LTS means** — Stop marketing LTS as "the stable choice" when it really means "the frozen choice." If I pick LTS, I should know that non-critical bugs won't be fixed for the lifetime of that release.
+4. **Clearer communication about what LTS means** — Help developers understand upfront that LTS means "frozen for stability" rather than "actively maintained with bug fixes." If I pick LTS, I should know that non-critical bugs likely won't be fixed for the lifetime of that release.
 
 ## Conclusion
 
-I love .NET. I've built my career on it. The performance improvements, the language features, the ecosystem — it's all genuinely impressive. But the support policy is stuck in a 2010 mindset where yearly releases were cutting edge.
+I genuinely appreciate .NET. I've built my career on it. The performance improvements, the language features, the ecosystem — it's all impressive work by talented engineers. But the support policy feels designed for a slower era where yearly releases were considered cutting edge.
 
-The web doesn't wait 12 months anymore. Cloud-native development doesn't wait 2 months for a hotfix. And enterprise applications shouldn't have to either.
+The web doesn't wait 12 months anymore. Cloud-native development doesn't wait 2 months for a hotfix. And enterprise applications increasingly can't afford to either.
 
-If .NET wants to remain competitive with modern alternatives like Bun, Deno, or even just well-maintained NPM packages, the support policy needs to evolve. LTS should mean "we fix your bugs," not "we freeze your bugs in amber."
+If .NET wants to remain competitive with modern alternatives like Bun, Deno, or even just well-maintained NPM packages, the support policy needs to evolve. Microsoft has already proven with Aspire and Platform Extensions that faster iteration is possible. LTS should mean "we keep your applications stable **and** we fix your bugs," not "we freeze your bugs alongside your features."
 
-Until then, I'll be here, manually patching my cultures and downgrading my packages, waiting for the next major release to solve problems that should have been fixed months ago.
+Until then, I'll be here, manually patching my cultures and downgrading my packages, waiting for the next major release to solve problems that could have been addressed months ago.
 
 ---
 
-*Have you experienced similar frustrations with .NET's support policy? Feel free to share your own horror stories.*
+*Have you experienced similar frustrations with .NET's support policy? I'd be interested to hear your experiences.*
