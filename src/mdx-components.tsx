@@ -154,11 +154,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </pre>
     ),
-    code: ({ children }) => (
-      <code className="rounded bg-[#afb8c133] px-1.5 py-0.5 font-mono text-[#1f2328] dark:bg-[#6e768166] dark:text-[#e6edf3]">
-        {children}
-      </code>
-    ),
     img: (props: ImageProps) => (
       <Image
         sizes="100vw"

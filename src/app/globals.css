@@ -135,3 +135,24 @@
   --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
   --color-prettylights-syntax-variable: #ffa657;
 }
+
+/* Inline code styling (not inside pre) */
+:not(pre) > code {
+  background-color: #afb8c133;
+  color: #1f2328;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-geist-mono), monospace;
+}
+
+.dark :not(pre) > code {
+  background-color: #6e768166;
+  color: #e6edf3;
+}
+
+/* Remove background from code inside pre (fenced code blocks) */
+pre > code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
