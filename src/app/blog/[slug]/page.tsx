@@ -34,6 +34,7 @@ export async function generateMetadata({
     publishedAt: publishedTime,
     summary: description,
     image,
+    updatedAt,
   } = post.metadata;
   const ogImage = image ?? `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
@@ -45,6 +46,7 @@ export async function generateMetadata({
       description,
       type: 'article',
       publishedTime,
+      modifiedTime: updatedAt,
       url: `${baseUrl}/blog/${post.slug}`,
       images: [
         {
@@ -96,6 +98,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <ClientDate date={post.metadata.publishedAt} />
               </time>
             </span>
+            {post.metadata.updatedAt ? (
+              <>
+                <span aria-hidden={true}>|</span>
+                <span className="text-xs text-gray-500 dark:text-foreground/60">
+                  Updated{' '}
+                  <time dateTime={post.metadata.updatedAt}>
+                    <ClientDate date={post.metadata.updatedAt} />
+                  </time>
+                </span>
+              </>
+            ) : null}
           </span>
         </p>
         <MDXContent />
