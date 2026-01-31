@@ -5,7 +5,7 @@ import * as z from 'zod';
 export const env = createEnv({
   server: {},
   client: {
-    NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
+    NEXT_PUBLIC_SENTRY_DSN: z.string(),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
