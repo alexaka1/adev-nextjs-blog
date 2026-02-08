@@ -50,7 +50,7 @@
     "@tailwindcss/postcss": "4.1.18",
     "@types/mdx": "2.0.13",
     "@types/node": "24.10.10",
-    "@types/react": "19.2.12",
+    "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "eslint-plugin-import-zod": "1.2.1",
     "oxfmt": "0.28.0",
