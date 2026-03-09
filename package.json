@@ -18,8 +18,9 @@
     "tw:upgrade": "bunx --bun @tailwindcss/upgrade@latest"
   },
   "overrides": {
-    "brace-expansion": ">=2.0.2",
-    "mdast-util-to-hast": ">=13.2.1"
+    "brace-expansion@<1.1.12": "~1.1.12",
+    "brace-expansion@>=2.0.0 <2.0.2": "~2.0.2",
+    "mdast-util-to-hast@<13.2.1": "^13.2.1"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",
