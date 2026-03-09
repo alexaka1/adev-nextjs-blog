@@ -50,9 +50,9 @@
     "@sentry/cli",
   ],
   "overrides": {
-    "brace-expansion@<1.1.12": "~1.1.12",
-    "brace-expansion@>=2.0.0 <2.0.2": "~2.0.2",
-    "mdast-util-to-hast@<13.2.1": "^13.2.1",
+    "brace-expansion@~1.1.0": "~1.1.12",
+    "brace-expansion@~2.0.0": "~2.0.2",
+    "mdast-util-to-hast@^13.0.0": "^13.2.1",
   },
   "packages": {
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
