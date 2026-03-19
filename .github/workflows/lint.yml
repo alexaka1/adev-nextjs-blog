@@ -41,10 +41,12 @@ jobs:
         id: lint
         shell: bash
         run: |
+          set +e
           set -o pipefail
           bun run lint 2>&1 | tee lint-output.txt
-          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
-        continue-on-error: true
+          lint_exit=${PIPESTATUS[0]}
+          echo "exit_code=${lint_exit}" >> "$GITHUB_OUTPUT"
+          exit 0
       - name: Build markdown report
         id: report
         shell: bash
