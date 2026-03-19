@@ -32,42 +32,11 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      - uses: oxc-project/oxlint-action@92eec2c4d5dbbb882c926478438aa4b7f20ffe2d # v3.0.0
-        with:
-          config: .oxlintrc.json
+      - name: Generate Next.js types
+        run: bunx --bun next typegen
       - name: Run lint and capture output
-        id: lint
-        shell: bash
         run: |
-          set -o pipefail
-          bun run lint 2>&1 | tee lint-output.txt
-          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
-        continue-on-error: true
-      - name: Build markdown report
-        id: report
-        shell: bash
-        run: |
-          TITLE=$([ "${{ steps.lint.outputs.exit_code }}" = "0" ] && echo "✅ Lint passed" || echo "❌ Lint found issues")
-          {
-            echo "### ${TITLE}"
-            echo
-            echo "<details><summary>Show output</summary>"
-            echo
-            echo '```'
-            tail -c 60000 lint-output.txt || true
-            echo '```'
-            echo
-            echo "</details>"
-          } > lint-report.md
-      - name: Comment lint results on PR
-        if: ${{ !cancelled() }}
-        uses: marocchino/sticky-pull-request-comment@70d2764d1a7d5d9560b100cbea0077fc8f633987 # v3.0.2
-        with:
-          header: lint-report:adev-nextjs-blog
-          path: lint-report.md
-      - name: Fail if lint failed
-        if: steps.lint.outputs.exit_code != '0' && !cancelled()
-        run: exit ${{ steps.lint.outputs.exit_code }}
+          bun run lint --format=github
       - name: Build
         run: bun run build
         env:
