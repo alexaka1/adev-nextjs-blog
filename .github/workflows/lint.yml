@@ -32,6 +32,8 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Generate Next.js types
+        run: bun run next typegen
       - uses: oxc-project/oxlint-action@92eec2c4d5dbbb882c926478438aa4b7f20ffe2d # v3.0.0
         with:
           config: .oxlintrc.json
@@ -66,8 +68,8 @@ jobs:
           header: lint-report:adev-nextjs-blog
           path: lint-report.md
       - name: Fail if lint failed
-        if: steps.lint.outputs.exit_code != '0' && !cancelled()
-        run: exit ${{ steps.lint.outputs.exit_code }}
+        if: ${{ always() && steps.lint.outputs.exit_code != '0' }}
+        run: exit 1
       - name: Build
         run: bun run build
         env:
