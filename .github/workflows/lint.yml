@@ -68,7 +68,7 @@ jobs:
           header: lint-report:adev-nextjs-blog
           path: lint-report.md
       - name: Fail if lint failed
-        if: ${{ always() && steps.lint.outputs.exit_code != '0' }}
+        if: ${{ steps.lint.outputs.exit_code != '0' && !cancelled() }}
         run: exit 1
       - name: Build
         run: bun run build
