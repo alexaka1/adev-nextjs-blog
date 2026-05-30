@@ -143,3 +143,30 @@ This repository does not have a test suite configured. There is no `test` script
 
 ### Formatting Note
 The `bun run fmt` command may show errors for non-JS/TS files due to external formatter issues with oxfmt. This is a known issue and does not affect the CI build.
+
+## Cursor Cloud specific instructions
+
+### Runtime
+- **Bun** is required (`engines.bun` in `package.json`; pin in `.bun-version`, currently `1.3.14`). Install with [oven-sh/setup-bun](https://github.com/oven-sh/setup-bun) or `curl -fsSL https://bun.sh/install | bash -s "bun-v$(cat .bun-version)"` if Bun is not on `PATH`.
+- There is **no database** and no separate API service—only the Next.js app on **port 3000**.
+
+### Environment variables for local dev/build without Sentry
+- Set `SKIP_T3_ENV_VALIDATION=true` for **`bun run build`** (documented above) **and** for **`bun run dev` / `bun run start`** when `NEXT_PUBLIC_SENTRY_DSN` is unset. Without it, the instrumentation hook fails on missing Sentry env validation in `src/lib/env.ts`.
+
+### Services
+| Service | Command | URL |
+|---------|---------|-----|
+| Dev | `SKIP_T3_ENV_VALIDATION=true bun run dev` | http://localhost:3000 |
+| Prod-like | `SKIP_T3_ENV_VALIDATION=true bun run build` then `bun run start` | http://localhost:3000 |
+
+Use a long-lived shell (e.g. tmux) for `bun run dev`; it does not exit after starting.
+
+### Validation (matches CI)
+See **Build and Validation Commands** above: `bun install --frozen-lockfile`, `bun run lint`, `SKIP_T3_ENV_VALIDATION=true bun run build`. No `test` script exists.
+
+### Lint note
+`bun run lint` may report two existing `jsx-a11y(prefer-tag-over-role)` warnings in icon components; CI still passes when exit code is 0.
+
+### Optional
+- `docker compose up --build` needs Sentry build args; not required for normal blog development.
+- `bun run check-site-meta` checks http://localhost:3000 while the app is running.
