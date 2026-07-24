@@ -7,7 +7,7 @@
       "dependencies": {
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
-        "@next/mdx": "16.2.10",
+        "@next/mdx": "16.2.11",
         "@radix-ui/react-avatar": "1.2.3",
         "@radix-ui/react-dropdown-menu": "2.1.21",
         "@radix-ui/react-label": "2.1.12",
@@ -199,7 +199,7 @@
 
     "@next/env": ["@next/env@16.2.11", "", {}, "sha512-0do5A3BJ2gxWr0ZCMcD6BhW+e595jyxdTl3rXTS6lOtD8ektMiW6CO+EPwt1Eca1DBnm90r/7GdiKWBKxH++DA=="],
 
-    "@next/mdx": ["@next/mdx@16.2.10", "", { "dependencies": { "source-map": "^0.7.0" }, "peerDependencies": { "@mdx-js/loader": ">=0.15.0", "@mdx-js/react": ">=0.15.0" }, "optionalPeers": ["@mdx-js/loader", "@mdx-js/react"] }, "sha512-r6T32AyQ0xy6p0vKd1lNbz6RUXuVXdGYSAI0dRrpbnqGnTWQXefADZGui4PlwjqROj0XQBMqVwot9ntPWao9PA=="],
+    "@next/mdx": ["@next/mdx@16.2.11", "", { "dependencies": { "source-map": "^0.7.0" }, "peerDependencies": { "@mdx-js/loader": ">=0.15.0", "@mdx-js/react": ">=0.15.0" }, "optionalPeers": ["@mdx-js/loader", "@mdx-js/react"] }, "sha512-9y/dvZAUwANCm9S2I/CaE/XJ7j6eBYQmLohfXlP+LTtjItDAMu+vbg8pxYlT/8EaT4NxyyxOJcHyTUclk86jVg=="],
 
     "@next/swc-darwin-arm64": ["@next/swc-darwin-arm64@16.2.11", "", { "os": "darwin", "cpu": "arm64" }, "sha512-wryL4pjKmDwGv2ox6+GZDFxvmtSRLqApBR8kL1j4+vhB7Z5vJC/zAnXpiR9Xkfzl0AS8WLMnsuGV/UKI67/rrw=="],
 
