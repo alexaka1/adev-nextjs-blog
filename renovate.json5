@@ -11,7 +11,7 @@
     ':rebaseStalePrs',
     ':pinDependencies',
     'security:minimumReleaseAgeNpm',
-    ':automergePatch',
+    ':automergeMinor',
     ':automergeDigest',
   ],
 }
