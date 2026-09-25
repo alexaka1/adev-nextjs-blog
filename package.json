@@ -54,7 +54,7 @@
     "@types/react-dom": "19.3.0",
     "eslint-plugin-import-zod": "1.2.1",
     "oxfmt": "0.70.0",
-    "oxlint": "1.83.0",
+    "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2002",
     "prettier-plugin-tailwindcss": "0.8.1",
     "tailwindcss": "4.3.3",
